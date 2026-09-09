@@ -1,204 +1,369 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>STYLE TEAM</title>
+```
+<title>VORIX</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
+```
 
 </head>
+
 <body>
-<canvas id="lightningCanvas"></canvas>
+
 <audio id="bgMusic" loop preload="auto">
     <source src="https://xgwaqdtufwxqllytpxmv.supabase.co/storage/v1/object/public/Anything/Dave_ft_Tems_-_Raindance.mp3" type="audio/mpeg">
 </audio>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
-    <div class="logo">STYLE TEAM</div>
 
-    <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#shop">Shop</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-    </nav>
+```
+<div class="logo">
+    VORIX
+</div>
 
-    <div class="header-icons">
+<nav class="navbar">
 
-        
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
 
-        <button type="button"
-                class="cart-btn"
-                id="cartButton">
+</nav>
 
-            🛒
+<div class="header-icons">
 
-            <span id="cartCount">0</span>
+    <button type="button"
+            class="cart-btn"
+            id="cartButton">
 
-        </button>
+        🛒
 
-    </div>
+        <span id="cartCount">
+            0
+        </span>
+
+    </button>
+
+</div>
+```
 
 </header>
 
 <main>
 
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero" id="home">
-    <div class="hero-content">
 
-        <p class="hero-small-title">
-            STYLE TEAM
-        </p>
+```
+<div class="hero-content">
 
-        <h1>
-            WEAR YOUR<br>
-            <span>STYLE.</span>
-        </h1>
+    <p class="hero-small-title">
+        VORIX
+    </p>
 
-        <p class="hero-description">
-            Discover our latest collection,
-            designed for your everyday style.
-        </p>
+    <h1>
+        WEAR YOUR<br>
+        <span>STYLE.</span>
+    </h1>
 
-        <a href="#shop"
-           class="hero-btn">
-            SHOP NOW
-        </a>
+    <p class="hero-description">
+        Discover our latest collection,
+        designed for your everyday style.
+    </p>
 
-    </div>
+    <a href="#shop"
+       class="hero-btn">
+
+        SHOP NOW
+
+    </a>
+
+</div>
+```
 
 </section>
 
-<div class="products">
+<!-- =========================
+     SHOP
+========================= -->
 
-    <article class="category-card">
-        <div class="category-content">
-            <h3>T-Shirts</h3>
-            <p>Explore our T-Shirts collection</p>
-        </div>
-    </article>
+<section class="shop" id="shop">
 
-    <article class="category-card">
-        <div class="category-content">
-            <h3>Shoes</h3>
-            <p>Explore our Shoes collection</p>
-        </div>
-    </article>
+```
+<div class="section-title">
 
-    <article class="category-card">
-        <div class="category-content">
-            <h3>Pants</h3>
-            <p>Explore our Pants collection</p>
-        </div>
-    </article>
+    <p>
+        OUR COLLECTION
+    </p>
 
-    <article class="category-card">
-        <div class="category-content">
-            <h3>JACKETS</h3>
-            <p>Explore our JACKETS collection</p>
-        </div>
-    </article>
+    <h2>
+        Latest <span>Collection</span>
+    </h2>
 
 </div>
 
 
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<div class="products">
+
+
+    <!-- T-SHIRTS -->
+
+    <article class="category-card">
+
+        <div class="category-content">
+
+            <h3>
+                T-Shirts
+            </h3>
+
+            <p>
+                Explore our T-Shirts collection
+            </p>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- SHOES -->
+
+    <article class="category-card">
+
+        <div class="category-content">
+
+            <h3>
+                Shoes
+            </h3>
+
+            <p>
+                Explore our Shoes collection
+            </p>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- PANTS -->
+
+    <article class="category-card">
+
+        <div class="category-content">
+
+            <h3>
+                Pants
+            </h3>
+
+            <p>
+                Explore our Pants collection
+            </p>
+
+        </div>
+
+    </article>
+
+
+
+    <!-- JACKETS -->
+
+    <article class="category-card">
+
+        <div class="category-content">
+
+            <h3>
+                JACKETS
+            </h3>
+
+            <p>
+                Explore our JACKETS collection
+            </p>
+
+        </div>
+
+    </article>
+
+</div>
+```
+
+</section>
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="about" id="about">
+
+```
+<div class="about-content">
+
+    <p class="section-label">
+        ABOUT US
+    </p>
+
+    <h2>
+        STYLE IS<br>
+        <span>EVERYTHING.</span>
+    </h2>
+
+    <p>
+        VORIX is a fashion brand created
+        for people who want to express their
+        personality through what they wear.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section class="contact" id="contact">
-    <div class="section-title">
 
-        <p>GET IN TOUCH</p>
+```
+<div class="section-title">
 
-        <h2>
-            Contact <span>Us</span>
-        </h2>
+    <p>
+        GET IN TOUCH
+    </p>
 
-    </div>
+    <h2>
+        Contact <span>Us</span>
+    </h2>
 
-    <div class="contact-info">
+</div>
 
-        <p>Instagram: @styleteam</p>
+<div class="contact-info">
 
-        <p>Phone: 01000000000</p>
+    <p>
+        Instagram: @vorix
+    </p>
 
-        <p>Email: styleteam@example.com</p>
+    <p>
+        Phone: 01000000000
+    </p>
 
-    </div>
+    <p>
+        Email: vorix@example.com
+    </p>
+
+</div>
+```
 
 </section>
 
 </main>
 
-<!-- CART -->
+<!-- =========================
+     CART
+========================= -->
+
 <div class="cart-overlay"
      id="cartOverlay">
 
-    <div class="cart">
+```
+<div class="cart">
 
-        <div class="cart-header">
+    <div class="cart-header">
 
-            <h2>Your Cart</h2>
+        <h2>
+            Your Cart
+        </h2>
 
-            <button type="button"
-                    id="closeCart">
-                ×
-            </button>
+        <button type="button"
+                id="closeCart">
 
-        </div>
+            ×
 
+        </button>
 
-        <div class="cart-items"
-             id="cartItems">
-
-            <p class="empty-cart">
-                Your cart is empty.
-            </p>
-
-        </div>
+    </div>
 
 
-        <div class="cart-footer">
+    <div class="cart-items"
+         id="cartItems">
 
-            <div class="cart-total">
+        <p class="empty-cart">
+            Your cart is empty.
+        </p>
 
-                <span>Total</span>
-
-                <strong id="cartTotal">
-                    0 EGP
-                </strong>
-
-            </div>
+    </div>
 
 
-            <button type="button"
-                    class="checkout-btn"
-                    id="whatsappBtn">
+    <div class="cart-footer">
 
-                CONNECT ON WHATSAPP
+        <div class="cart-total">
 
-            </button>
+            <span>
+                Total
+            </span>
+
+            <strong id="cartTotal">
+                0 EGP
+            </strong>
 
         </div>
+
+
+        <button type="button"
+                class="checkout-btn"
+                id="whatsappBtn">
+
+            CONNECT ON WHATSAPP
+
+        </button>
 
     </div>
 
 </div>
+```
+
+</div>
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="footer">
-    <div class="logo">
-        STYLE TEAM
-    </div>
 
-    <p>
-        © 2026 STYLE TEAM. All Rights Reserved.
-    </p>
+```
+<div class="logo">
+    VORIX
+</div>
+
+<p>
+    © 2026 VORIX. All Rights Reserved.
+</p>
+```
 
 </footer>
 
 <script src="script.js"></script>
 
-<!-- START MUSIC AFTER FIRST TOUCH -->
+<!-- =========================
+     MUSIC
+========================= -->
+
 <script>
 
 const bgMusic = document.getElementById("bgMusic");
