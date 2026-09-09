@@ -61,6 +61,10 @@
 
 <main>
 
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero" id="home">
 
 ```
@@ -90,6 +94,10 @@
 
 </section>
 
+<!-- =========================
+     SHOP
+========================= -->
+
 <section class="shop" id="shop">
 
 ```
@@ -106,11 +114,15 @@
 </div>
 
 
-<div class="products">
+<!-- =========================
+     CATEGORIES
+========================= -->
+
+<div class="categories" id="categories">
 
 
     <article class="category-card"
-             onclick="window.location.href='tshirts.html'">
+             data-category="tshirts">
 
         <div class="category-content">
 
@@ -128,7 +140,7 @@
 
 
     <article class="category-card"
-             onclick="window.location.href='shoes.html'">
+             data-category="shoes">
 
         <div class="category-content">
 
@@ -146,7 +158,7 @@
 
 
     <article class="category-card"
-             onclick="window.location.href='pants.html'">
+             data-category="pants">
 
         <div class="category-content">
 
@@ -164,7 +176,7 @@
 
 
     <article class="category-card"
-             onclick="window.location.href='hoodies.html'">
+             data-category="hoodies">
 
         <div class="category-content">
 
@@ -180,11 +192,286 @@
 
     </article>
 
+</div>
+
+
+<!-- =========================
+     T-SHIRTS
+========================= -->
+
+<div class="category-products"
+     id="tshirts">
+
+    <button type="button"
+            class="back-btn">
+
+        ← Back
+
+    </button>
+
+
+    <div class="category-title">
+
+        <p>
+            T-SHIRTS
+        </p>
+
+        <h2>
+            T-Shirt <span>Collection</span>
+        </h2>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <article class="product-card"
+                 data-name="White T-Shirt"
+                 data-price="450">
+
+            <div class="product-image">
+
+                <img src="https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png"
+                     alt="White T-Shirt">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>
+                    White T-Shirt
+                </h3>
+
+                <p class="product-category">
+                    T-Shirts
+                </p>
+
+                <p class="product-price">
+                    450 EGP
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="product-card"
+                 data-name="Black T-Shirt"
+                 data-price="450">
+
+            <div class="product-image">
+
+                <img src="https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png"
+                     alt="Black T-Shirt">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>
+                    Black T-Shirt
+                </h3>
+
+                <p class="product-category">
+                    T-Shirts
+                </p>
+
+                <p class="product-price">
+                    450 EGP
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SHOES
+========================= -->
+
+<div class="category-products"
+     id="shoes">
+
+    <button type="button"
+            class="back-btn">
+
+        ← Back
+
+    </button>
+
+
+    <div class="category-title">
+
+        <p>
+            SHOES
+        </p>
+
+        <h2>
+            Shoes <span>Collection</span>
+        </h2>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <article class="product-card"
+                 data-name="Sneakers"
+                 data-price="1200">
+
+            <div class="product-image">
+
+                <img src="https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png"
+                     alt="Sneakers">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>
+                    Sneakers
+                </h3>
+
+                <p class="product-category">
+                    Shoes
+                </p>
+
+                <p class="product-price">
+                    1200 EGP
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     PANTS
+========================= -->
+
+<div class="category-products"
+     id="pants">
+
+    <button type="button"
+            class="back-btn">
+
+        ← Back
+
+    </button>
+
+
+    <div class="category-title">
+
+        <p>
+            PANTS
+        </p>
+
+        <h2>
+            Pants <span>Collection</span>
+        </h2>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <article class="product-card"
+                 data-name="Spot Pants"
+                 data-price="700">
+
+            <div class="product-image">
+
+                <img src="https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png"
+                     alt="Spot Pants">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>
+                    Spot Pants
+                </h3>
+
+                <p class="product-category">
+                    Pants
+                </p>
+
+                <p class="product-price">
+                    700 EGP
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HOODIES
+========================= -->
+
+<div class="category-products"
+     id="hoodies">
+
+    <button type="button"
+            class="back-btn">
+
+        ← Back
+
+    </button>
+
+
+    <div class="category-title">
+
+        <p>
+            HOODIES
+        </p>
+
+        <h2>
+            Hoodies <span>Collection</span>
+        </h2>
+
+    </div>
+
+
+    <div class="products">
+
+        <div class="empty-category">
+
+            <h3>
+                Coming Soon
+            </h3>
+
+            <p>
+                New hoodies are coming soon.
+            </p>
+
+        </div>
+
+    </div>
 
 </div>
 ```
 
 </section>
+
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section class="about" id="about">
 
@@ -210,6 +497,10 @@
 ```
 
 </section>
+
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section class="contact" id="contact">
 
@@ -247,7 +538,9 @@
 
 </main>
 
-<!-- CART -->
+<!-- =========================
+     CART
+========================= -->
 
 <div class="cart-overlay"
      id="cartOverlay">
@@ -311,6 +604,10 @@
 
 </div>
 
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer class="footer">
 
 ```
@@ -327,94 +624,27 @@
 
 <script src="script.js"></script>
 
-<!-- MUSIC -->
+<!-- =========================
+     MUSIC
+========================= -->
 
 <script>
 
 const bgMusic =
     document.getElementById("bgMusic");
 
-
-/* =========================
-   RESTORE MUSIC POSITION
-========================= */
-
-const savedTime =
-    localStorage.getItem("musicTime");
-
-if (savedTime !== null) {
-
-    bgMusic.addEventListener(
-        "loadedmetadata",
-        function () {
-
-            const time =
-                Number(savedTime);
-
-            if (
-                Number.isFinite(time) &&
-                time >= 0 &&
-                time < bgMusic.duration
-            ) {
-
-                bgMusic.currentTime =
-                    time;
-
-            }
-
-        },
-        { once: true }
-    );
-
-}
-
-
-/* =========================
-   SAVE MUSIC POSITION
-========================= */
-
-function saveMusicTime() {
-
-    if (!bgMusic.paused) {
-
-        localStorage.setItem(
-            "musicTime",
-            bgMusic.currentTime
-        );
-
-    }
-
-}
-
-setInterval(
-    saveMusicTime,
-    300
-);
-
-
-/* =========================
-   START MUSIC
-========================= */
-
 function playMusic() {
 
-    bgMusic.play().catch(
-        function (error) {
+    bgMusic.play().catch(function(error) {
 
-            console.log(
-                "Music error:",
-                error
-            );
+        console.log(
+            "Music error:",
+            error
+        );
 
-        }
-    );
+    });
 
 }
-
-
-/* =========================
-   USER INTERACTION
-========================= */
 
 document.addEventListener(
     "touchstart",
@@ -426,23 +656,6 @@ document.addEventListener(
     "click",
     playMusic,
     { once: true }
-);
-
-
-/* =========================
-   SAVE BEFORE LEAVING
-========================= */
-
-window.addEventListener(
-    "beforeunload",
-    function () {
-
-        localStorage.setItem(
-            "musicTime",
-            bgMusic.currentTime
-        );
-
-    }
 );
 
 </script>
