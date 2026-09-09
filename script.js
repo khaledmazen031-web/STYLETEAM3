@@ -5,13 +5,38 @@ document.addEventListener("DOMContentLoaded", function () {
    ELEMENTS
 ========================= */
 
-const cartButton = document.getElementById("cartButton");
-const cartOverlay = document.getElementById("cartOverlay");
-const closeCart = document.getElementById("closeCart");
-const cartItems = document.getElementById("cartItems");
-const cartCount = document.getElementById("cartCount");
-const cartTotal = document.getElementById("cartTotal");
-const whatsappBtn = document.getElementById("whatsappBtn");
+const cartButton =
+    document.getElementById("cartButton");
+
+const cartOverlay =
+    document.getElementById("cartOverlay");
+
+const closeCart =
+    document.getElementById("closeCart");
+
+const cartItems =
+    document.getElementById("cartItems");
+
+const cartCount =
+    document.getElementById("cartCount");
+
+const cartTotal =
+    document.getElementById("cartTotal");
+
+const whatsappBtn =
+    document.getElementById("whatsappBtn");
+
+const categories =
+    document.querySelectorAll(".category-card");
+
+const categoryProducts =
+    document.querySelectorAll(".category-products");
+
+const backButtons =
+    document.querySelectorAll(".back-btn");
+
+const products =
+    document.querySelectorAll(".product-card");
 
 
 /* =========================
@@ -27,11 +52,13 @@ if (
     !cartTotal ||
     !whatsappBtn
 ) {
+
     console.error(
-        "VORIX: Some HTML elements are missing."
+        "STYLE TEAM: Some HTML elements are missing."
     );
 
     return;
+
 }
 
 
@@ -53,7 +80,9 @@ try {
             JSON.parse(savedCart);
 
         if (Array.isArray(parsedCart)) {
+
             cart = parsedCart;
+
         }
 
     }
@@ -61,7 +90,7 @@ try {
 } catch (error) {
 
     console.error(
-        "VORIX: Error loading cart.",
+        "STYLE TEAM: Error loading cart.",
         error
     );
 
@@ -86,13 +115,115 @@ function saveCart() {
     } catch (error) {
 
         console.error(
-            "VORIX: Error saving cart.",
+            "STYLE TEAM: Error saving cart.",
             error
         );
 
     }
 
 }
+
+
+/* =========================
+   CATEGORY SYSTEM
+========================= */
+
+function showCategory(categoryName) {
+
+    categories.forEach(function (category) {
+
+        category.style.display = "none";
+
+    });
+
+
+    categoryProducts.forEach(function (section) {
+
+        section.classList.remove("active");
+
+    });
+
+
+    const selectedSection =
+        document.getElementById(categoryName);
+
+
+    if (selectedSection) {
+
+        selectedSection.classList.add("active");
+
+    }
+
+}
+
+
+function showCategories() {
+
+    categoryProducts.forEach(
+        function (section) {
+
+            section.classList.remove("active");
+
+        }
+    );
+
+
+    categories.forEach(function (category) {
+
+        category.style.display = "";
+
+    });
+
+}
+
+
+categories.forEach(function (category) {
+
+    category.addEventListener(
+        "click",
+        function () {
+
+            const categoryName =
+                category.dataset.category;
+
+            if (!categoryName) {
+                return;
+            }
+
+            showCategory(
+                categoryName
+            );
+
+            document.getElementById("shop")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+        }
+    );
+
+});
+
+
+backButtons.forEach(function (button) {
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            showCategories();
+
+            document.getElementById("shop")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+        }
+    );
+
+});
 
 
 /* =========================
@@ -131,6 +262,7 @@ function addToCart(name, price) {
         return;
     }
 
+
     const numericPrice =
         Number(price);
 
@@ -139,7 +271,9 @@ function addToCart(name, price) {
         !Number.isFinite(numericPrice) ||
         numericPrice <= 0
     ) {
+
         return;
+
     }
 
 
@@ -161,9 +295,7 @@ function addToCart(name, price) {
         cart.push({
 
             name: name,
-
             price: numericPrice,
-
             quantity: 1
 
         });
@@ -176,6 +308,33 @@ function addToCart(name, price) {
     updateCart();
 
 }
+
+
+/* =========================
+   PRODUCT CLICK
+========================= */
+
+products.forEach(function (product) {
+
+    product.addEventListener(
+        "click",
+        function () {
+
+            const name =
+                product.dataset.name;
+
+            const price =
+                product.dataset.price;
+
+            addToCart(
+                name,
+                price
+            );
+
+        }
+    );
+
+});
 
 
 /* =========================
@@ -193,16 +352,18 @@ function updateCart() {
 
     /* CLEAN INVALID PRODUCTS */
 
-    cart = cart.filter(function (product) {
+    cart = cart.filter(
+        function (product) {
 
-        return (
-            product &&
-            product.name &&
-            Number(product.price) > 0 &&
-            Number(product.quantity) > 0
-        );
+            return (
+                product &&
+                product.name &&
+                Number(product.price) > 0 &&
+                Number(product.quantity) > 0
+            );
 
-    });
+        }
+    );
 
 
     /* EMPTY CART */
@@ -218,96 +379,97 @@ function updateCart() {
     }
 
 
-    /* PRODUCTS */
+    /* CART PRODUCTS */
 
-    cart.forEach(function (product, index) {
+    cart.forEach(
+        function (product, index) {
 
-        const price =
-            Number(product.price);
+            const price =
+                Number(product.price);
 
-        const quantity =
-            Number(product.quantity);
+            const quantity =
+                Number(product.quantity);
 
-
-        const productTotal =
-            price * quantity;
-
-
-        total += productTotal;
-
-        count += quantity;
+            const productTotal =
+                price * quantity;
 
 
-        const item =
-            document.createElement("div");
+            total += productTotal;
 
-        item.className =
-            "cart-item";
+            count += quantity;
 
 
-        item.innerHTML = `
+            const item =
+                document.createElement("div");
 
-            <div class="cart-item-info">
+            item.className =
+                "cart-item";
 
-                <h3>
-                    ${escapeHTML(product.name)}
-                </h3>
 
-                <p>
-                    ${price.toLocaleString()}
+            item.innerHTML = `
+
+                <div class="cart-item-info">
+
+                    <h3>
+                        ${escapeHTML(product.name)}
+                    </h3>
+
+                    <p>
+                        ${price.toLocaleString()}
+                        EGP
+                    </p>
+
+                </div>
+
+
+                <div class="quantity-controls">
+
+                    <button
+                        type="button"
+                        data-action="increase"
+                        data-index="${index}">
+                        +
+                    </button>
+
+                    <span>
+                        ${quantity}
+                    </span>
+
+                    <button
+                        type="button"
+                        data-action="decrease"
+                        data-index="${index}">
+                        −
+                    </button>
+
+                </div>
+
+
+                <div class="cart-item-total">
+
+                    ${productTotal.toLocaleString()}
                     EGP
-                </p>
 
-            </div>
+                </div>
 
-
-            <div class="quantity-controls">
 
                 <button
                     type="button"
-                    data-action="increase"
+                    class="remove-item"
+                    data-action="remove"
                     data-index="${index}">
-                    +
+
+                    ×
+
                 </button>
 
-                <span>
-                    ${quantity}
-                </span>
-
-                <button
-                    type="button"
-                    data-action="decrease"
-                    data-index="${index}">
-                    −
-                </button>
-
-            </div>
+            `;
 
 
-            <div class="cart-item-total">
+            cartItems.appendChild(item);
 
-                ${productTotal.toLocaleString()}
-                EGP
-
-            </div>
-
-
-            <button
-                type="button"
-                class="remove-item"
-                data-action="remove"
-                data-index="${index}">
-
-                ×
-
-            </button>
-
-        `;
-
-
-        cartItems.appendChild(item);
-
-    });
+        }
+    );
 
 
     /* COUNT */
@@ -374,44 +536,50 @@ cartItems.addEventListener(
             !Number.isInteger(index) ||
             !cart[index]
         ) {
+
             return;
+
         }
 
-
-        /* INCREASE */
 
         if (action === "increase") {
 
             cart[index].quantity =
-                Number(cart[index].quantity) + 1;
+                Number(
+                    cart[index].quantity
+                ) + 1;
 
         }
 
 
-        /* DECREASE */
-
         if (action === "decrease") {
 
             cart[index].quantity =
-                Number(cart[index].quantity) - 1;
+                Number(
+                    cart[index].quantity
+                ) - 1;
 
 
             if (
                 cart[index].quantity <= 0
             ) {
 
-                cart.splice(index, 1);
+                cart.splice(
+                    index,
+                    1
+                );
 
             }
 
         }
 
 
-        /* REMOVE */
-
         if (action === "remove") {
 
-            cart.splice(index, 1);
+            cart.splice(
+                index,
+                1
+            );
 
         }
 
@@ -507,8 +675,6 @@ whatsappBtn.addEventListener(
         event.preventDefault();
 
 
-        /* CHECK CART */
-
         if (cart.length === 0) {
 
             alert(
@@ -520,16 +686,13 @@ whatsappBtn.addEventListener(
         }
 
 
-        /* WHATSAPP NUMBER */
-
         const phoneNumber =
             "201007341483";
 
 
-        /* MESSAGE */
-
         let message =
-            "Hello VORIX 👋\n\n";
+            "Hello STYLE TEAM 👋\n\n";
+
 
         message +=
             "I want to order:\n\n";
@@ -538,31 +701,33 @@ whatsappBtn.addEventListener(
         let total = 0;
 
 
-        cart.forEach(function (product) {
+        cart.forEach(
+            function (product) {
 
-            const price =
-                Number(product.price);
+                const price =
+                    Number(product.price);
 
-            const quantity =
-                Number(product.quantity);
-
-
-            const productTotal =
-                price * quantity;
+                const quantity =
+                    Number(product.quantity);
 
 
-            total += productTotal;
+                const productTotal =
+                    price * quantity;
 
 
-            message +=
-                product.name +
-                " x " +
-                quantity +
-                " = " +
-                productTotal.toLocaleString() +
-                " EGP\n";
+                total += productTotal;
 
-        });
+
+                message +=
+                    product.name +
+                    " x " +
+                    quantity +
+                    " = " +
+                    productTotal.toLocaleString() +
+                    " EGP\n";
+
+            }
+        );
 
 
         message +=
@@ -575,16 +740,14 @@ whatsappBtn.addEventListener(
             " EGP";
 
 
-        /* CREATE URL */
-
         const whatsappURL =
             "https://wa.me/" +
             phoneNumber +
             "?text=" +
-            encodeURIComponent(message);
+            encodeURIComponent(
+                message
+            );
 
-
-        /* OPEN WHATSAPP */
 
         const newWindow =
             window.open(
@@ -592,8 +755,6 @@ whatsappBtn.addEventListener(
                 "_blank"
             );
 
-
-        /* FALLBACK */
 
         if (
             !newWindow ||
