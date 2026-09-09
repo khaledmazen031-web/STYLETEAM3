@@ -12,6 +12,7 @@
 ```
 
 </head>
+
 <body>
 
 <audio id="bgMusic" loop preload="auto">
@@ -19,19 +20,25 @@
 </audio>
 
 <header class="header">
-    <div class="logo">STYLE TEAM</div>
 
 ```
+<div class="logo">
+    STYLE TEAM
+</div>
+
 <nav class="navbar">
+
     <a href="#home">Home</a>
     <a href="#shop">Shop</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
+
 </nav>
 
 <div class="header-icons">
 
-    <button type="button" class="search-btn">
+    <button type="button"
+            class="search-btn">
         ⌕
     </button>
 
@@ -41,7 +48,9 @@
 
         🛒
 
-        <span id="cartCount">0</span>
+        <span id="cartCount">
+            0
+        </span>
 
     </button>
 
@@ -53,9 +62,10 @@
 <main>
 
 <section class="hero" id="home">
-    <div class="hero-content">
 
 ```
+<div class="hero-content">
+
     <p class="hero-small-title">
         STYLE TEAM
     </p>
@@ -81,10 +91,13 @@
 </section>
 
 <section class="shop" id="shop">
-    <div class="section-title">
 
 ```
-    <p>OUR COLLECTION</p>
+<div class="section-title">
+
+    <p>
+        OUR COLLECTION
+    </p>
 
     <h2>
         Latest <span>Collection</span>
@@ -174,9 +187,10 @@
 </section>
 
 <section class="about" id="about">
-    <div class="about-content">
 
 ```
+<div class="about-content">
+
     <p class="section-label">
         ABOUT US
     </p>
@@ -198,10 +212,13 @@
 </section>
 
 <section class="contact" id="contact">
-    <div class="section-title">
 
 ```
-    <p>GET IN TOUCH</p>
+<div class="section-title">
+
+    <p>
+        GET IN TOUCH
+    </p>
 
     <h2>
         Contact <span>Us</span>
@@ -211,11 +228,17 @@
 
 <div class="contact-info">
 
-    <p>Instagram: @styleteam</p>
+    <p>
+        Instagram: @styleteam
+    </p>
 
-    <p>Phone: 01000000000</p>
+    <p>
+        Phone: 01000000000
+    </p>
 
-    <p>Email: styleteam@example.com</p>
+    <p>
+        Email: styleteam@example.com
+    </p>
 
 </div>
 ```
@@ -234,11 +257,15 @@
 
     <div class="cart-header">
 
-        <h2>Your Cart</h2>
+        <h2>
+            Your Cart
+        </h2>
 
         <button type="button"
                 id="closeCart">
+
             ×
+
         </button>
 
     </div>
@@ -258,7 +285,9 @@
 
         <div class="cart-total">
 
-            <span>Total</span>
+            <span>
+                Total
+            </span>
 
             <strong id="cartTotal">
                 0 EGP
@@ -283,11 +312,12 @@
 </div>
 
 <footer class="footer">
-    <div class="logo">
-        STYLE TEAM
-    </div>
 
 ```
+<div class="logo">
+    STYLE TEAM
+</div>
+
 <p>
     © 2026 STYLE TEAM. All Rights Reserved.
 </p>
@@ -297,33 +327,123 @@
 
 <script src="script.js"></script>
 
-<!-- START MUSIC AFTER FIRST TOUCH -->
+<!-- MUSIC -->
 
 <script>
 
-const bgMusic = document.getElementById("bgMusic");
+const bgMusic =
+    document.getElementById("bgMusic");
 
-function playMusic() {
 
-    bgMusic.play().then(function() {
+/* =========================
+   RESTORE MUSIC POSITION
+========================= */
 
-        console.log("Music started");
+const savedTime =
+    localStorage.getItem("musicTime");
 
-    }).catch(function(error) {
+if (savedTime !== null) {
 
-        console.log("Music error:", error);
+    bgMusic.addEventListener(
+        "loadedmetadata",
+        function () {
 
-    });
+            const time =
+                Number(savedTime);
+
+            if (
+                Number.isFinite(time) &&
+                time >= 0 &&
+                time < bgMusic.duration
+            ) {
+
+                bgMusic.currentTime =
+                    time;
+
+            }
+
+        },
+        { once: true }
+    );
 
 }
 
-document.addEventListener("touchstart", playMusic, {
-    once: true
-});
 
-document.addEventListener("click", playMusic, {
-    once: true
-});
+/* =========================
+   SAVE MUSIC POSITION
+========================= */
+
+function saveMusicTime() {
+
+    if (!bgMusic.paused) {
+
+        localStorage.setItem(
+            "musicTime",
+            bgMusic.currentTime
+        );
+
+    }
+
+}
+
+setInterval(
+    saveMusicTime,
+    300
+);
+
+
+/* =========================
+   START MUSIC
+========================= */
+
+function playMusic() {
+
+    bgMusic.play().catch(
+        function (error) {
+
+            console.log(
+                "Music error:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   USER INTERACTION
+========================= */
+
+document.addEventListener(
+    "touchstart",
+    playMusic,
+    { once: true }
+);
+
+document.addEventListener(
+    "click",
+    playMusic,
+    { once: true }
+);
+
+
+/* =========================
+   SAVE BEFORE LEAVING
+========================= */
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        localStorage.setItem(
+            "musicTime",
+            bgMusic.currentTime
+        );
+
+    }
+);
 
 </script>
 
