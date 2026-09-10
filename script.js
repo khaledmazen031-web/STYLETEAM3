@@ -954,3 +954,218 @@ categoryOverlay.addEventListener('click', (e) => {
         categoryOverlay.classList.remove('active');
     }
 });
+// تشغيل الموسيقى
+const bgMusic = document.getElementById("bgMusic");
+
+function playMusic() {
+    bgMusic.py?.() || bgMusic.play().catch(function(error) {
+        console.log("Music error:", error);
+    });
+}
+
+document.addEventListener("touchstart", playMusic, { once: true });
+document.addEventListener("click", playMusic, { once: true });
+
+// --- إدارة سلة الشراء (Cart State) ---
+let cart = [];
+
+const cartButton = document.getElementById('cartButton');
+const cartOverlay = document.getElementById('cartOverlay');
+const closeCartBtn = document.getElementById('closeCart');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartCount = document.getElementById('cartCount');
+const cartTotal = document.getElementById('cartTotal');
+const whatsappBtn = document.getElementById('whatsappBtn');
+
+// فتح وإغلاق السلة الأساسية
+cartButton.addEventListener('click', () => {
+    cartOverlay.classList.add('active');
+});
+
+closeCartBtn.addEventListener('click', () => {
+    cartOverlay.classList.remove('active');
+});
+
+cartOverlay.addEventListener('click', (e) => {
+    if (e.target === cartOverlay) {
+        cartOverlay.classList.remove('active');
+    }
+});
+
+// دالة إضافة منتج للسلة (مع استلام المقاس)
+window.addToCartFromCategory = function(name, price, img, buttonElement) {
+    // نجيب المقاس اللي المستخدم اختاره من الـ Select جنب الزرار
+    const productItemContainer = buttonElement.closest('.category-product-item');
+    const sizeSelect = productItemContainer.querySelector('.size-select');
+    const selectedSize = sizeSelect ? sizeSelect.value : 'M';
+
+    const numericPrice = parseFloat(price.replace(/[^0-9.]/g, '')) || 0;
+    
+    // نشوف لو نفس المنتج ونفس المقاس موجودين قبل كده في السلة
+    const existingItem = cart.find(item => item.name === name && item.size === selectedSize);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ 
+            id: `${name}-${selectedSize}`, 
+            name, 
+            size: selectedSize, 
+            price: numericPrice, 
+            rawPrice: price, 
+            img, 
+            quantity: 1 
+        });
+    }
+    
+    updateCartUI();
+    alert(`Added ${name} (Size: ${selectedSize}) to cart! 🛒`);
+};
+
+// تحديث واجهة السلة
+function updateCartUI() {
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.innerText = totalCount;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `<p class="empty-cart">Your cart is empty.</p>`;
+        cartTotal.innerText = `0 EGP`;
+        return;
+    }
+
+    cartItemsContainer.innerHTML = cart.map((item) => `
+        <div class="cart-item" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 12px; justify-content: space-between;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <img src="${item.img}" alt="${item.name}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px;">
+                <div>
+                    <h4 style="font-size: 13px; margin-bottom: 2px; color: #333;">${item.name}</h4>
+                    <p style="color: #666; font-size: 11px; margin-bottom: 4px;">Size: <b>${item.size}</b> | ${item.rawPrice}</p>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button onclick="decreaseQuantity('${item.id}')" style="background: #eee; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold;">-</button>
+                        <span style="font-size: 13px; font-weight: bold;">${item.quantity}</span>
+                        <button onclick="increaseQuantity('${item.id}')" style="background: #eee; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold;">+</button>
+                    </div>
+                </div>
+            </div>
+            <button onclick="removeItem('${item.id}')" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 18px; padding: 5px;">×</button>
+        </div>
+    `).join('');
+
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    cartTotal.innerText = `${totalPrice} EGP`;
+}
+
+// زيادة الكمية من جوه السلة
+window.increaseQuantity = function(id) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.quantity += 1;
+        updateCartUI();
+    }
+};
+
+// تقليل الكمية من جوه السلة
+window.decreaseQuantity = function(id) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.quantity -= 1;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.id !== id);
+        }
+        updateCartUI();
+    }
+};
+
+// حذف المنتج نهائياً من السلة
+window.removeItem = function(id) {
+    cart = cart.filter(i => i.id !== id);
+    updateCartUI();
+};
+
+// ربط زر الواتساب لإرسال تفاصيل الطلب بالمقاسات والكميات
+whatsappBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    let message = "Hello VORIX, I want to order:\n";
+    cart.forEach(item => {
+        message += `- ${item.name} (Size: ${item.size}) x${item.quantity} - ${item.rawPrice}\n`;
+    });
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    message += `\nTotal: ${totalPrice} EGP`;
+    
+    const whatsappUrl = `https://wa.me/201117704856?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+});
+
+
+// --- منطق قائمة الأقسام المنزلقة (Category Drawer) ---
+const categoryOverlay = document.getElementById('categoryOverlay');
+const closeCategoryBtn = document.getElementById('closeCategory');
+const categoryTitle = document.getElementById('categoryTitle');
+const categoryContainer = document.getElementById('categoryProductsContainer');
+
+// بيانات المنتجات لكل قسم (متاحة بالمقاسات)
+const categoryData = {
+    tshirts: [
+        { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" },
+        { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" }
+    ],
+    shoes: [
+        { name: "VORIX Runner Sneakers", price: "1200 EGP", img: "https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" }
+    ],
+    pants: [
+        { name: "Cargo Street Pants", price: "750 EGP", img: "https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" }
+    ],
+    hoodies: [
+        { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" }
+    ]
+};
+
+// فتح قائمة القسم وعرض المنتجات مع اختيار المقاس
+document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const catKey = card.getAttribute('data-category');
+        const products = categoryData[catKey] || [];
+        
+        categoryTitle.innerText = card.querySelector('h3').innerText;
+        
+        if(products.length > 0) {
+            categoryContainer.innerHTML = products.map((item) => `
+                <div class="category-product-item" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 12px; justify-content: space-between;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <img src="${item.img}" alt="${item.name}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px;">
+                        <div>
+                            <h4 style="font-size: 13px; margin-bottom: 2px; color: #333;">${item.name}</h4>
+                            <p style="color: #666; font-size: 12px; font-weight: bold; margin-bottom: 4px;">${item.price}</p>
+                            <!-- اختيار المقاس -->
+                            <select class="size-select" style="padding: 3px 6px; font-size: 11px; border-radius: 4px; border: 1px solid #ccc;">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addToCartFromCategory('${item.name}', '${item.price}', '${item.img}', this)" style="background: #000; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;">Add 🛒</button>
+                </div>
+            `).join('');
+        } else {
+            categoryContainer.innerHTML = `<p class="empty-cart">No products available in this category.</p>`;
+        }
+
+        categoryOverlay.classList.add('active');
+    });
+});
+
+// إغلاق قائمة الأقسام
+closeCategoryBtn.addEventListener('click', () => {
+    categoryOverlay.classList.remove('active');
+});
+
+categoryOverlay.addEventListener('click', (e) => {
+    if (e.target === categoryOverlay) {
+        categoryOverlay.classList.remove('active');
+    }
+});
