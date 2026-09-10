@@ -751,3 +751,32 @@ whatsappBtn.addEventListener(
 updateCart();
 
 });
+// إظهار القسم المحدد وإخفاء كروت الأقسام الرئيسية
+function showCategory(categoryId) {
+    // إخفاء الأقسام الرئيسية
+    document.getElementById('categoriesContainer').style.display = 'none';
+    
+    // إخفاء كل أقسام المنتجات أولاً احتياطياً
+    const allProductsSections = document.querySelectorAll('.category-products');
+    allProductsSections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // إظهار القسم المطلوب فقط
+    const targetSection = document.getElementById(categoryId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+}
+
+// العودة للقائمة الرئيسية للأقسام
+function hideCategories() {
+    // إخفاء كل أقسام المنتجات
+    const allProductsSections = document.querySelectorAll('.category-products');
+    allProductsSections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // إظهار كروت الأقسام الرئيسية تاني
+    document.getElementById('categoriesContainer').style.display = 'grid';
+}

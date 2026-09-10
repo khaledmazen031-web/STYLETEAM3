@@ -61,7 +61,7 @@
     ========================= -->
     <section class="shop" id="shop">
 
-        <div class="section-title">
+        <div class="section-title" id="shopTitle">
             <p>OUR COLLECTION</p>
             <h2>Latest <span>Collection</span></h2>
         </div>
@@ -254,6 +254,55 @@
 </footer>
 
 <script src="script.js"></script>
+
+<!-- =========================
+     CATEGORIES SWITCH SCRIPT
+========================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const categoryCards = document.querySelectorAll(".category-card");
+    const categoriesContainer = document.getElementById("categories");
+    const shopTitle = document.getElementById("shopTitle");
+    const productSections = document.querySelectorAll(".category-products");
+    const backButtons = document.querySelectorAll(".back-btn");
+
+    // عند الضغط على أي كارت قسم
+    categoryCards.forEach(card => {
+        card.addEventListener("click", () => {
+            const targetId = card.getAttribute("data-category");
+            
+            // إخفاء الأقسام الرئيسية وعنوان القسم الرئيسي
+            categoriesContainer.style.display = "none";
+            if (shopTitle) shopTitle.style.display = "none";
+
+            // إخفاء كل أقسام المنتجات كاحتياط
+            productSections.forEach(section => {
+                section.classList.remove("active");
+            });
+
+            // إظهار القسم المستهدف
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.classList.add("active");
+            }
+        });
+    });
+
+    // زر الرجوع للقائمة الرئيسية
+    backButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            // إخفاء كل أقسام المنتجات
+            productSections.forEach(section => {
+                section.classList.remove("active");
+            });
+
+            // إظهار الأقسام الرئيسية وعنوان القسم الرئيسي مرة أخرى
+            categoriesContainer.style.display = "grid"; // أو حسب الـ display القديم عندك
+            if (shopTitle) shopTitle.style.display = "block";
+        });
+    });
+});
+</script>
 
 <!-- =========================
      MUSIC SCRIPT

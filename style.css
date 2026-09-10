@@ -594,3 +594,10 @@ button {
 .checkout-btn:hover {
     background: var(--beige-light);
 }
+.category-products {
+    display: none;
+}
+
+.category-products.active {
+    display: block;
+}
