@@ -601,3 +601,49 @@ button {
 .category-products.active {
     display: block;
 }
+/* =========================
+   MOBILE RESPONSIVE FOR CATEGORIES
+========================= */
+@media screen and (max-width: 768px) {
+    /* لو الأقسام محطوطة في Grid، نخليها عمودين جنب بعض أو عمود واحد حسب رغبتك (هنا خليناها عمودين عشان تملى المساحة بذوق) */
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 15px;
+    }
+
+    /* ضبط حجم الكارت والصورة للـ موبايل */
+    .category-card {
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff; /* لو الخلفية شفافة أو محتاجة لون */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-image {
+        height: 140px; /* تحكم في ارتفاع الصورة على الموبايل */
+        width: 100%;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .category-content {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .category-content h3 {
+        font-size: 15px; /* حجم اسم القسم مناسب للموبايل */
+        margin-bottom: 4px;
+    }
+
+    .category-content p {
+        font-size: 12px; /* حجم الوصف الصغير */
+        color: #777;
+    }
+}
