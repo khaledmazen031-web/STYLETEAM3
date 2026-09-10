@@ -602,3 +602,17 @@ button {
 
     max-height:
         calc(100vh - 24px);
+        /* إخفاء أقسام المنتجات افتراضياً */
+.category-products {
+    display: none;
+}
+
+/* إظهار القسم النشط فقط */
+.category-products.active {
+    display: block;
+}
+
+/* إخفاء قائمة الكاردات الرئيسية لما ندخل جوه قسم معين (اختياري حسب رغبتك) */
+.categories.hidden {
+    display: none;
+}

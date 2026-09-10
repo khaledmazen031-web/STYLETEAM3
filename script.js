@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-```
 /* =========================
    ELEMENTS
 ========================= */
@@ -25,6 +24,9 @@ const cartTotal =
 
 const whatsappBtn =
     document.getElementById("whatsappBtn");
+
+const categoriesContainer =
+    document.getElementById("categories");
 
 const categories =
     document.querySelectorAll(".category-card");
@@ -130,28 +132,22 @@ function saveCart() {
 
 function showCategory(categoryName) {
 
-    categories.forEach(function (category) {
+    // إخفاء قائمة الكروت الرئيسية تماماً
+    if (categoriesContainer) {
+        categoriesContainer.style.display = "none";
+    }
 
-        category.style.display = "none";
-
-    });
-
-
+    // إخفاء جميع أقسام المنتجات أولاً
     categoryProducts.forEach(function (section) {
-
         section.classList.remove("active");
-
     });
 
-
+    // إظهار القسم المختار فقط
     const selectedSection =
         document.getElementById(categoryName);
 
-
     if (selectedSection) {
-
         selectedSection.classList.add("active");
-
     }
 
 }
@@ -159,18 +155,15 @@ function showCategory(categoryName) {
 
 function showCategories() {
 
+    // إخفاء جميع أقسام المنتجات
     categoryProducts.forEach(function (section) {
-
         section.classList.remove("active");
-
     });
 
-
-    categories.forEach(function (category) {
-
-        category.style.display = "";
-
-    });
+    // إظهار قائمة الكروت الرئيسية مرة أخرى
+    if (categoriesContainer) {
+        categoriesContainer.style.display = "";
+    }
 
 }
 
@@ -184,22 +177,18 @@ categories.forEach(function (category) {
             const categoryName =
                 category.dataset.category;
 
-
             if (!categoryName) {
 
                 return;
 
             }
 
-
             showCategory(
                 categoryName
             );
 
-
             const shop =
                 document.getElementById("shop");
-
 
             if (shop) {
 
@@ -224,10 +213,8 @@ backButtons.forEach(function (button) {
 
             showCategories();
 
-
             const shop =
                 document.getElementById("shop");
-
 
             if (shop) {
 
@@ -282,10 +269,8 @@ function addToCart(name, price) {
 
     }
 
-
     const numericPrice =
         Number(price);
-
 
     if (
         !Number.isFinite(numericPrice) ||
@@ -296,14 +281,12 @@ function addToCart(name, price) {
 
     }
 
-
     const existingProduct =
         cart.find(function (item) {
 
             return item.name === name;
 
         });
-
 
     if (existingProduct) {
 
@@ -323,7 +306,6 @@ function addToCart(name, price) {
         });
 
     }
-
 
     saveCart();
 
@@ -412,18 +394,15 @@ function updateCart() {
         const productTotal =
             price * quantity;
 
-
         total += productTotal;
 
         count += quantity;
-
 
         const item =
             document.createElement("div");
 
         item.className =
             "cart-item";
-
 
         item.innerHTML = `
 
@@ -439,7 +418,6 @@ function updateCart() {
                 </p>
 
             </div>
-
 
             <div class="quantity-controls">
 
@@ -463,7 +441,6 @@ function updateCart() {
 
             </div>
 
-
             <div class="cart-item-total">
 
                 ${productTotal.toLocaleString()}
@@ -471,18 +448,14 @@ function updateCart() {
 
             </div>
 
-
             <button
                 type="button"
                 class="remove-item"
                 data-action="remove"
                 data-index="${index}">
-
-
             </button>
 
         `;
-
 
         cartItems.appendChild(item);
 
@@ -534,20 +507,17 @@ cartItems.addEventListener(
         const button =
             event.target.closest("button");
 
-
         if (!button) {
 
             return;
 
         }
 
-
         const action =
             button.dataset.action;
 
         const index =
             Number(button.dataset.index);
-
 
         if (
             !action ||
@@ -558,7 +528,6 @@ cartItems.addEventListener(
             return;
 
         }
-
 
         /* INCREASE */
 
@@ -571,7 +540,6 @@ cartItems.addEventListener(
 
         }
 
-
         /* DECREASE */
 
         if (action === "decrease") {
@@ -580,7 +548,6 @@ cartItems.addEventListener(
                 Number(
                     cart[index].quantity
                 ) - 1;
-
 
             if (
                 cart[index].quantity <= 0
@@ -595,7 +562,6 @@ cartItems.addEventListener(
 
         }
 
-
         /* REMOVE */
 
         if (action === "remove") {
@@ -606,7 +572,6 @@ cartItems.addEventListener(
             );
 
         }
-
 
         saveCart();
 
@@ -698,7 +663,6 @@ whatsappBtn.addEventListener(
 
         event.preventDefault();
 
-
         if (cart.length === 0) {
 
             alert(
@@ -709,21 +673,16 @@ whatsappBtn.addEventListener(
 
         }
 
-
         const phoneNumber =
             "201007341483";
-
 
         let message =
             "Hello STYLE TEAM 👋\n\n";
 
-
         message +=
             "I want to order:\n\n";
 
-
         let total = 0;
-
 
         cart.forEach(function (product) {
 
@@ -736,9 +695,7 @@ whatsappBtn.addEventListener(
             const productTotal =
                 price * quantity;
 
-
             total += productTotal;
-
 
             message +=
                 product.name +
@@ -750,16 +707,13 @@ whatsappBtn.addEventListener(
 
         });
 
-
         message +=
             "\n--------------------\n";
-
 
         message +=
             "Total: " +
             total.toLocaleString() +
             " EGP";
-
 
         const whatsappURL =
             "https://wa.me/" +
@@ -769,13 +723,11 @@ whatsappBtn.addEventListener(
                 message
             );
 
-
         const newWindow =
             window.open(
                 whatsappURL,
                 "_blank"
             );
-
 
         if (
             !newWindow ||
@@ -797,6 +749,5 @@ whatsappBtn.addEventListener(
 ========================= */
 
 updateCart();
-```
 
 });
