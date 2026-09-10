@@ -28,14 +28,10 @@
 
 <main>
 
-    <!-- =========================
-         HERO SECTION
-    ========================= -->
+    <!-- HERO SECTION -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <p class="hero-small-title">
-                VORIX
-            </p>
+            <p class="hero-small-title">VORIX</p>
             <h1>
                 WEAR YOUR<br>
                 <span>STYLE.</span>
@@ -43,23 +39,17 @@
             <p class="hero-description">
                 Discover our latest collection, designed for your everyday style.
             </p>
-            <a href="#shop" class="hero-btn">
-                SHOP NOW
-            </a>
+            <a href="#shop" class="hero-btn">SHOP NOW</a>
         </div>
     </section>
 
-    <!-- =========================
-         SHOP SECTION (CATEGORIES WITH IMAGES)
-    ========================= -->
+    <!-- SHOP SECTION -->
     <section class="shop" id="shop">
-
         <div class="section-title">
             <p>OUR COLLECTION</p>
             <h2>Latest <span>Collection</span></h2>
         </div>
 
-        <!-- Categories List (تفتح داخل قائمة منزلقة تشبه السلة) -->
         <div class="categories" id="categories">
             <div class="category-card" data-category="tshirts">
                 <div class="category-image">
@@ -101,12 +91,9 @@
                 </div>
             </div>
         </div>
-
     </section>
 
-    <!-- =========================
-         ABOUT SECTION
-    ========================= -->
+    <!-- ABOUT SECTION -->
     <section class="about" id="about">
         <div class="about-content">
             <p class="section-label">ABOUT US</p>
@@ -114,15 +101,11 @@
                 STYLE IS<br>
                 <span>EVERYTHING.</span>
             </h2>
-            <p>
-                VORIX is a fashion brand created for people who want to express their personality through what they wear.
-            </p>
+            <p>VORIX is a fashion brand created for people who want to express their personality through what they wear.</p>
         </div>
     </section>
 
-    <!-- =========================
-         CONTACT SECTION
-    ========================= -->
+    <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <div class="section-title">
             <p>GET IN TOUCH</p>
@@ -137,9 +120,7 @@
 
 </main>
 
-<!-- =========================
-     CART OVERLAY
-========================= -->
+<!-- CART OVERLAY -->
 <div class="cart-overlay" id="cartOverlay">
     <div class="cart">
         <div class="cart-header">
@@ -154,16 +135,12 @@
                 <span>Total</span>
                 <strong id="cartTotal">0 EGP</strong>
             </div>
-            <button type="button" class="checkout-btn" id="whatsappBtn">
-                CONNECT ON WHATSAPP
-            </button>
+            <button type="button" class="checkout-btn" id="whatsappBtn">CONNECT ON WHATSAPP</button>
         </div>
     </div>
 </div>
 
-<!-- =========================
-     CATEGORY DRAWER OVERLAY (قائمة الأقسام المنزلقة)
-========================= -->
+<!-- CATEGORY DRAWER OVERLAY -->
 <div class="cart-overlay" id="categoryOverlay">
     <div class="cart">
         <div class="cart-header">
@@ -176,9 +153,7 @@
     </div>
 </div>
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 <footer class="footer">
     <div class="logo">VORIX</div>
     <p>© 2026 VORIX. All Rights Reserved.</p>
@@ -186,81 +161,15 @@
 
 <script src="script.js"></script>
 
-<!-- =========================
-     CATEGORY DRAWER & MUSIC SCRIPT
-========================= -->
 <script>
-// تشغيل الموسيقى
 const bgMusic = document.getElementById("bgMusic");
-
 function playMusic() {
     bgMusic.py?.() || bgMusic.play().catch(function(error) {
         console.log("Music error:", error);
     });
 }
-
 document.addEventListener("touchstart", playMusic, { once: true });
 document.addEventListener("click", playMusic, { once: true });
-
-// منطق قائمة الأقسام المنزلقة (Category Drawer)
-const categoryOverlay = document.getElementById('categoryOverlay');
-const closeCategoryBtn = document.getElementById('closeCategory');
-const categoryTitle = document.getElementById('categoryTitle');
-const categoryContainer = document.getElementById('categoryProductsContainer');
-
-// بيانات المنتجات التجريبية لكل قسم
-const categoryData = {
-    tshirts: [
-        { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" },
-        { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" }
-    ],
-    shoes: [
-        { name: "VORIX Runner Sneakers", price: "1200 EGP", img: "https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" }
-    ],
-    pants: [
-        { name: "Cargo Street Pants", price: "750 EGP", img: "https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" }
-    ],
-    hoodies: [
-        { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" }
-    ]
-};
-
-// فتح القائمة عند الضغط على أي كارت قسم
-document.querySelectorAll('.category-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const catKey = card.getAttribute('data-category');
-        const products = categoryData[catKey] || [];
-        
-        categoryTitle.innerText = card.querySelector('h3').innerText;
-        
-        if(products.length > 0) {
-            categoryContainer.innerHTML = products.map(item => `
-                <div class="cart-item" style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                    <img src="${item.img}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
-                    <div>
-                        <h4 style="font-size: 14px; margin-bottom: 5px; color: #333;">${item.name}</h4>
-                        <p style="color: #666; font-size: 13px;">${item.price}</p>
-                    </div>
-                </div>
-            `).join('');
-        } else {
-            categoryContainer.innerHTML = `<p class="empty-cart">No products available in this category.</p>`;
-        }
-
-        categoryOverlay.classList.add('active');
-    });
-});
-
-// إغلاق قائمة الأقسام
-closeCategoryBtn.addEventListener('click', () => {
-    categoryOverlay.classList.remove('active');
-});
-
-categoryOverlay.addEventListener('click', (e) => {
-    if (e.target === categoryOverlay) {
-        categoryOverlay.classList.remove('active');
-    }
-});
 </script>
 
 </body>
