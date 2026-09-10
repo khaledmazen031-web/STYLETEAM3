@@ -59,9 +59,9 @@
             <h2>Latest <span>Collection</span></h2>
         </div>
 
-        <!-- Categories List (تفتح صفحات مستقلة) -->
+        <!-- Categories List (تفتح داخل قائمة منزلقة تشبه السلة) -->
         <div class="categories" id="categories">
-            <a href="tshirts.html" class="category-card">
+            <div class="category-card" data-category="tshirts">
                 <div class="category-image">
                     <img src="https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" alt="T-Shirts">
                 </div>
@@ -69,9 +69,9 @@
                     <h3>T-Shirts</h3>
                     <p>Explore T-Shirts</p>
                 </div>
-            </a>
+            </div>
 
-            <a href="shoes.html" class="category-card">
+            <div class="category-card" data-category="shoes">
                 <div class="category-image">
                     <img src="https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" alt="Shoes">
                 </div>
@@ -79,9 +79,9 @@
                     <h3>Shoes</h3>
                     <p>Explore Shoes</p>
                 </div>
-            </a>
+            </div>
 
-            <a href="pants.html" class="category-card">
+            <div class="category-card" data-category="pants">
                 <div class="category-image">
                     <img src="https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" alt="Pants">
                 </div>
@@ -89,9 +89,9 @@
                     <h3>Pants</h3>
                     <p>Explore Pants</p>
                 </div>
-            </a>
+            </div>
 
-            <a href="hoodies.html" class="category-card">
+            <div class="category-card" data-category="hoodies">
                 <div class="category-image">
                     <img src="https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" alt="Hoodies">
                 </div>
@@ -99,7 +99,7 @@
                     <h3>HOODIES</h3>
                     <p>Explore Hoodies</p>
                 </div>
-            </a>
+            </div>
         </div>
 
     </section>
@@ -162,6 +162,21 @@
 </div>
 
 <!-- =========================
+     CATEGORY DRAWER OVERLAY (قائمة الأقسام المنزلقة)
+========================= -->
+<div class="cart-overlay" id="categoryOverlay">
+    <div class="cart">
+        <div class="cart-header">
+            <h2 id="categoryTitle">Category Products</h2>
+            <button type="button" id="closeCategory">×</button>
+        </div>
+        <div class="cart-items" id="categoryProductsContainer">
+            <p class="empty-cart">Loading products...</p>
+        </div>
+    </div>
+</div>
+
+<!-- =========================
      FOOTER
 ========================= -->
 <footer class="footer">
@@ -172,9 +187,10 @@
 <script src="script.js"></script>
 
 <!-- =========================
-     MUSIC SCRIPT
+     CATEGORY DRAWER & MUSIC SCRIPT
 ========================= -->
 <script>
+// تشغيل الموسيقى
 const bgMusic = document.getElementById("bgMusic");
 
 function playMusic() {
@@ -185,6 +201,66 @@ function playMusic() {
 
 document.addEventListener("touchstart", playMusic, { once: true });
 document.addEventListener("click", playMusic, { once: true });
+
+// منطق قائمة الأقسام المنزلقة (Category Drawer)
+const categoryOverlay = document.getElementById('categoryOverlay');
+const closeCategoryBtn = document.getElementById('closeCategory');
+const categoryTitle = document.getElementById('categoryTitle');
+const categoryContainer = document.getElementById('categoryProductsContainer');
+
+// بيانات المنتجات التجريبية لكل قسم
+const categoryData = {
+    tshirts: [
+        { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" },
+        { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" }
+    ],
+    shoes: [
+        { name: "VORIX Runner Sneakers", price: "1200 EGP", img: "https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" }
+    ],
+    pants: [
+        { name: "Cargo Street Pants", price: "750 EGP", img: "https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" }
+    ],
+    hoodies: [
+        { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" }
+    ]
+};
+
+// فتح القائمة عند الضغط على أي كارت قسم
+document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const catKey = card.getAttribute('data-category');
+        const products = categoryData[catKey] || [];
+        
+        categoryTitle.innerText = card.querySelector('h3').innerText;
+        
+        if(products.length > 0) {
+            categoryContainer.innerHTML = products.map(item => `
+                <div class="cart-item" style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <img src="${item.img}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                    <div>
+                        <h4 style="font-size: 14px; margin-bottom: 5px; color: #333;">${item.name}</h4>
+                        <p style="color: #666; font-size: 13px;">${item.price}</p>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            categoryContainer.innerHTML = `<p class="empty-cart">No products available in this category.</p>`;
+        }
+
+        categoryOverlay.classList.add('active');
+    });
+});
+
+// إغلاق قائمة الأقسام
+closeCategoryBtn.addEventListener('click', () => {
+    categoryOverlay.classList.remove('active');
+});
+
+categoryOverlay.addEventListener('click', (e) => {
+    if (e.target === categoryOverlay) {
+        categoryOverlay.classList.remove('active');
+    }
+});
 </script>
 
 </body>
