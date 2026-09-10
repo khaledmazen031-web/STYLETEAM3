@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<title>STYLE TEAM</title>
-
-<link rel="stylesheet" href="style.css">
-
-
+    <title>STYLE TEAM</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <audio id="bgMusic" loop preload="auto">
@@ -20,638 +13,262 @@
 </audio>
 
 <header class="header">
+    <div class="logo">
+        STYLE TEAM
+    </div>
 
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-<div class="logo">
-    STYLE TEAM
-</div>
-
-<nav class="navbar">
-
-    <a href="#home">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-
-</nav>
-
-<div class="header-icons">
-
-    <button type="button"
-            class="search-btn">
-        ⌕
-    </button>
-
-    <button type="button"
-            class="cart-btn"
-            id="cartButton">
-
-        🛒
-
-        <span id="cartCount">
-            0
-        </span>
-
-    </button>
-
-</div>
-
-
+    <div class="header-icons">
+        <button type="button" class="search-btn">⌕</button>
+        <button type="button" class="cart-btn" id="cartButton">
+            🛒
+            <span id="cartCount">0</span>
+        </button>
+    </div>
 </header>
 
 <main>
 
-
-
-<section class="hero" id="home">
-
-
-<div class="hero-content">
-
-    <p class="hero-small-title">
-        STYLE TEAM
-    </p>
-
-    <h1>
-        WEAR YOUR<br>
-        <span>STYLE.</span>
-    </h1>
-
-    <p class="hero-description">
-        Discover our latest collection,
-        designed for your everyday style.
-    </p>
-
-    <a href="#shop"
-       class="hero-btn">
-        SHOP NOW
-    </a>
-
-</div>
-
-
-</section>
-
-
-
-<section class="shop" id="shop">
-
-
-<div class="section-title">
-
-    <p>
-        OUR COLLECTION
-    </p>
-
-    <h2>
-        Latest <span>Collection</span>
-    </h2>
-
-</div>
-
-
-
-
-<div class="categories" id="categories">
-
-
-    <article class="category-card"
-             data-category="tshirts">
-
-        <div class="category-content">
-
-            <h3>
-                T-Shirts
-            </h3>
-
-            <p>
-                Explore our T-Shirts collection
+    <!-- =========================
+         HERO SECTION
+    ========================= -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="hero-small-title">
+                STYLE TEAM
             </p>
+            <h1>
+                WEAR YOUR<br>
+                <span>STYLE.</span>
+            </h1>
+            <p class="hero-description">
+                Discover our latest collection, designed for your everyday style.
+            </p>
+            <a href="#shop" class="hero-btn">
+                SHOP NOW
+            </a>
+        </div>
+    </section>
 
+    <!-- =========================
+         SHOP SECTION (CATEGORIES & PRODUCTS)
+    ========================= -->
+    <section class="shop" id="shop">
+
+        <div class="section-title">
+            <p>OUR COLLECTION</p>
+            <h2>Latest <span>Collection</span></h2>
         </div>
 
-    </article>
+        <!-- Categories List -->
+        <div class="categories" id="categories">
+            <article class="category-card" data-category="tshirts">
+                <div class="category-content">
+                    <h3>T-Shirts</h3>
+                    <p>Explore our T-Shirts collection</p>
+                </div>
+            </article>
 
+            <article class="category-card" data-category="shoes">
+                <div class="category-content">
+                    <h3>Shoes</h3>
+                    <p>Explore our Shoes collection</p>
+                </div>
+            </article>
 
-    <article class="category-card"
-             data-category="shoes">
+            <article class="category-card" data-category="pants">
+                <div class="category-content">
+                    <h3>Pants</h3>
+                    <p>Explore our Pants collection</p>
+                </div>
+            </article>
 
-        <div class="category-content">
-
-            <h3>
-                Shoes
-            </h3>
-
-            <p>
-                Explore our Shoes collection
-            </p>
-
+            <article class="category-card" data-category="hoodies">
+                <div class="category-content">
+                    <h3>HOODIES</h3>
+                    <p>Explore our HOODIES collection</p>
+                </div>
+            </article>
         </div>
 
-    </article>
+        <!-- T-SHIRTS PRODUCTS -->
+        <div class="category-products" id="tshirts">
+            <button type="button" class="back-btn">← Back</button>
+            <div class="category-title">
+                <p>T-SHIRTS</p>
+                <h2>T-Shirt <span>Collection</span></h2>
+            </div>
+            <div class="products">
+                <article class="product-card" data-name="White T-Shirt" data-price="450">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" alt="White T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <h3>White T-Shirt</h3>
+                        <p class="product-category">T-Shirts</p>
+                        <p class="product-price">450 EGP</p>
+                    </div>
+                </article>
 
-
-    <article class="category-card"
-             data-category="pants">
-
-        <div class="category-content">
-
-            <h3>
-                Pants
-            </h3>
-
-            <p>
-                Explore our Pants collection
-            </p>
-
+                <article class="product-card" data-name="Black T-Shirt" data-price="450">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" alt="Black T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <h3>Black T-Shirt</h3>
+                        <p class="product-category">T-Shirts</p>
+                        <p class="product-price">450 EGP</p>
+                    </div>
+                </article>
+            </div>
         </div>
 
-    </article>
-
-
-    <article class="category-card"
-             data-category="hoodies">
-
-        <div class="category-content">
-
-            <h3>
-                HOODIES
-            </h3>
-
-            <p>
-                Explore our HOODIES collection
-            </p>
-
+        <!-- SHOES PRODUCTS -->
+        <div class="category-products" id="shoes">
+            <button type="button" class="back-btn">← Back</button>
+            <div class="category-title">
+                <p>SHOES</p>
+                <h2>Shoes <span>Collection</span></h2>
+            </div>
+            <div class="products">
+                <article class="product-card" data-name="Sneakers" data-price="1200">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" alt="Sneakers">
+                    </div>
+                    <div class="product-info">
+                        <h3>Sneakers</h3>
+                        <p class="product-category">Shoes</p>
+                        <p class="product-price">1200 EGP</p>
+                    </div>
+                </article>
+            </div>
         </div>
 
-    </article>
-
-</div>
-
-
-<!-- =========================
-     T-SHIRTS
-========================= -->
-
-<div class="category-products"
-     id="tshirts">
-
-    <button type="button"
-            class="back-btn">
-
-        ← Back
-
-    </button>
-
-
-    <div class="category-title">
-
-        <p>
-            T-SHIRTS
-        </p>
-
-        <h2>
-            T-Shirt <span>Collection</span>
-        </h2>
-
-    </div>
-
-
-    <div class="products">
-
-
-        <article class="product-card"
-                 data-name="White T-Shirt"
-                 data-price="450">
-
-            <div class="product-image">
-
-                <img src="https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png"
-                     alt="White T-Shirt">
-
+        <!-- PANTS PRODUCTS -->
+        <div class="category-products" id="pants">
+            <button type="button" class="back-btn">← Back</button>
+            <div class="category-title">
+                <p>PANTS</p>
+                <h2>Pants <span>Collection</span></h2>
             </div>
-
-            <div class="product-info">
-
-                <h3>
-                    White T-Shirt
-                </h3>
-
-                <p class="product-category">
-                    T-Shirts
-                </p>
-
-                <p class="product-price">
-                    450 EGP
-                </p>
-
+            <div class="products">
+                <article class="product-card" data-name="Spot Pants" data-price="700">
+                    <div class="product-image">
+                        <img src="https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" alt="Spot Pants">
+                    </div>
+                    <div class="product-info">
+                        <h3>Spot Pants</h3>
+                        <p class="product-category">Pants</p>
+                        <p class="product-price">700 EGP</p>
+                    </div>
+                </article>
             </div>
-
-        </article>
-
-
-        <article class="product-card"
-                 data-name="Black T-Shirt"
-                 data-price="450">
-
-            <div class="product-image">
-
-                <img src="https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png"
-                     alt="Black T-Shirt">
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Black T-Shirt
-                </h3>
-
-                <p class="product-category">
-                    T-Shirts
-                </p>
-
-                <p class="product-price">
-                    450 EGP
-                </p>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     SHOES
-========================= -->
-
-<div class="category-products"
-     id="shoes">
-
-    <button type="button"
-            class="back-btn">
-
-        ← Back
-
-    </button>
-
-
-    <div class="category-title">
-
-        <p>
-            SHOES
-        </p>
-
-        <h2>
-            Shoes <span>Collection</span>
-        </h2>
-
-    </div>
-
-
-    <div class="products">
-
-
-        <article class="product-card"
-                 data-name="Sneakers"
-                 data-price="1200">
-
-            <div class="product-image">
-
-                <img src="https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png"
-                     alt="Sneakers">
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Sneakers
-                </h3>
-
-                <p class="product-category">
-                    Shoes
-                </p>
-
-                <p class="product-price">
-                    1200 EGP
-                </p>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     PANTS
-========================= -->
-
-<div class="category-products"
-     id="pants">
-
-    <button type="button"
-            class="back-btn">
-
-        ← Back
-
-    </button>
-
-
-    <div class="category-title">
-
-        <p>
-            PANTS
-        </p>
-
-        <h2>
-            Pants <span>Collection</span>
-        </h2>
-
-    </div>
-
-
-    <div class="products">
-
-
-        <article class="product-card"
-                 data-name="Spot Pants"
-                 data-price="700">
-
-            <div class="product-image">
-
-                <img src="https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png"
-                     alt="Spot Pants">
-
-            </div>
-
-            <div class="product-info">
-
-                <h3>
-                    Spot Pants
-                </h3>
-
-                <p class="product-category">
-                    Pants
-                </p>
-
-                <p class="product-price">
-                    700 EGP
-                </p>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     HOODIES
-========================= -->
-
-<div class="category-products"
-     id="hoodies">
-
-    <button type="button"
-            class="back-btn">
-
-        ← Back
-
-    </button>
-
-
-    <div class="category-title">
-
-        <p>
-            HOODIES
-        </p>
-
-        <h2>
-            Hoodies <span>Collection</span>
-        </h2>
-
-    </div>
-
-
-    <div class="products">
-
-        <div class="empty-category">
-
-            <h3>
-                Coming Soon
-            </h3>
-
-            <p>
-                New hoodies are coming soon.
-            </p>
-
         </div>
 
-    </div>
+        <!-- HOODIES PRODUCTS -->
+        <div class="category-products" id="hoodies">
+            <button type="button" class="back-btn">← Back</button>
+            <div class="category-title">
+                <p>HOODIES</p>
+                <h2>Hoodies <span>Collection</span></h2>
+            </div>
+            <div class="products">
+                <div class="empty-category">
+                    <h3>Coming Soon</h3>
+                    <p>New hoodies are coming soon.</p>
+                </div>
+            </div>
+        </div>
 
-</div>
-```
+    </section>
 
-</section>
+    <!-- =========================
+         ABOUT SECTION
+    ========================= -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <p class="section-label">ABOUT US</p>
+            <h2>
+                STYLE IS<br>
+                <span>EVERYTHING.</span>
+            </h2>
+            <p>
+                STYLE TEAM is a fashion brand created for people who want to express their personality through what they wear.
+            </p>
+        </div>
+    </section>
 
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section class="about" id="about">
-
-```
-<div class="about-content">
-
-    <p class="section-label">
-        ABOUT US
-    </p>
-
-    <h2>
-        STYLE IS<br>
-        <span>EVERYTHING.</span>
-    </h2>
-
-    <p>
-        STYLE TEAM is a fashion brand created
-        for people who want to express their
-        personality through what they wear.
-    </p>
-
-</div>
-```
-
-</section>
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section class="contact" id="contact">
-
-```
-<div class="section-title">
-
-    <p>
-        GET IN TOUCH
-    </p>
-
-    <h2>
-        Contact <span>Us</span>
-    </h2>
-
-</div>
-
-<div class="contact-info">
-
-    <p>
-        Instagram: @styleteam
-    </p>
-
-    <p>
-        Phone: 01000000000
-    </p>
-
-    <p>
-        Email: styleteam@example.com
-    </p>
-
-</div>
-```
-
-</section>
+    <!-- =========================
+         CONTACT SECTION
+    ========================= -->
+    <section class="contact" id="contact">
+        <div class="section-title">
+            <p>GET IN TOUCH</p>
+            <h2>Contact <span>Us</span></h2>
+        </div>
+        <div class="contact-info">
+            <p>Instagram: @styleteam</p>
+            <p>Phone: 01000000000</p>
+            <p>Email: styleteam@example.com</p>
+        </div>
+    </section>
 
 </main>
 
 <!-- =========================
-     CART
+     CART OVERLAY
 ========================= -->
-
-<div class="cart-overlay"
-     id="cartOverlay">
-
-```
-<div class="cart">
-
-    <div class="cart-header">
-
-        <h2>
-            Your Cart
-        </h2>
-
-        <button type="button"
-                id="closeCart">
-
-            ×
-
-        </button>
-
-    </div>
-
-
-    <div class="cart-items"
-         id="cartItems">
-
-        <p class="empty-cart">
-            Your cart is empty.
-        </p>
-
-    </div>
-
-
-    <div class="cart-footer">
-
-        <div class="cart-total">
-
-            <span>
-                Total
-            </span>
-
-            <strong id="cartTotal">
-                0 EGP
-            </strong>
-
+<div class="cart-overlay" id="cartOverlay">
+    <div class="cart">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button type="button" id="closeCart">×</button>
         </div>
-
-
-        <button type="button"
-                class="checkout-btn"
-                id="whatsappBtn">
-
-            CONNECT ON WHATSAPP
-
-        </button>
-
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cartTotal">0 EGP</strong>
+            </div>
+            <button type="button" class="checkout-btn" id="whatsappBtn">
+                CONNECT ON WHATSAPP
+            </button>
+        </div>
     </div>
-
-</div>
-```
-
 </div>
 
 <!-- =========================
      FOOTER
 ========================= -->
-
 <footer class="footer">
-
-```
-<div class="logo">
-    STYLE TEAM
-</div>
-
-<p>
-    © 2026 STYLE TEAM. All Rights Reserved.
-</p>
-```
-
+    <div class="logo">STYLE TEAM</div>
+    <p>© 2026 STYLE TEAM. All Rights Reserved.</p>
 </footer>
 
 <script src="script.js"></script>
 
 <!-- =========================
-     MUSIC
+     MUSIC SCRIPT
 ========================= -->
-
 <script>
-
-const bgMusic =
-    document.getElementById("bgMusic");
+const bgMusic = document.getElementById("bgMusic");
 
 function playMusic() {
-
     bgMusic.play().catch(function(error) {
-
-        console.log(
-            "Music error:",
-            error
-        );
-
+        console.log("Music error:", error);
     });
-
 }
 
-document.addEventListener(
-    "touchstart",
-    playMusic,
-    { once: true }
-);
-
-document.addEventListener(
-    "click",
-    playMusic,
-    { once: true }
-);
-
+document.addEventListener("touchstart", playMusic, { once: true });
+document.addEventListener("click", playMusic, { once: true });
 </script>
 
 </body>
