@@ -159,13 +159,11 @@ function showCategory(categoryName) {
 
 function showCategories() {
 
-    categoryProducts.forEach(
-        function (section) {
+    categoryProducts.forEach(function (section) {
 
-            section.classList.remove("active");
+        section.classList.remove("active");
 
-        }
-    );
+    });
 
 
     categories.forEach(function (category) {
@@ -186,19 +184,31 @@ categories.forEach(function (category) {
             const categoryName =
                 category.dataset.category;
 
+
             if (!categoryName) {
+
                 return;
+
             }
+
 
             showCategory(
                 categoryName
             );
 
-            document.getElementById("shop")
-                .scrollIntoView({
+
+            const shop =
+                document.getElementById("shop");
+
+
+            if (shop) {
+
+                shop.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
+
+            }
 
         }
     );
@@ -214,11 +224,19 @@ backButtons.forEach(function (button) {
 
             showCategories();
 
-            document.getElementById("shop")
-                .scrollIntoView({
+
+            const shop =
+                document.getElementById("shop");
+
+
+            if (shop) {
+
+                shop.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
+
+            }
 
         }
     );
@@ -259,7 +277,9 @@ function closeCartWindow() {
 function addToCart(name, price) {
 
     if (!name) {
+
         return;
+
     }
 
 
@@ -295,7 +315,9 @@ function addToCart(name, price) {
         cart.push({
 
             name: name,
+
             price: numericPrice,
+
             quantity: 1
 
         });
@@ -352,18 +374,16 @@ function updateCart() {
 
     /* CLEAN INVALID PRODUCTS */
 
-    cart = cart.filter(
-        function (product) {
+    cart = cart.filter(function (product) {
 
-            return (
-                product &&
-                product.name &&
-                Number(product.price) > 0 &&
-                Number(product.quantity) > 0
-            );
+        return (
+            product &&
+            product.name &&
+            Number(product.price) > 0 &&
+            Number(product.quantity) > 0
+        );
 
-        }
-    );
+    });
 
 
     /* EMPTY CART */
@@ -381,95 +401,92 @@ function updateCart() {
 
     /* CART PRODUCTS */
 
-    cart.forEach(
-        function (product, index) {
+    cart.forEach(function (product, index) {
 
-            const price =
-                Number(product.price);
+        const price =
+            Number(product.price);
 
-            const quantity =
-                Number(product.quantity);
+        const quantity =
+            Number(product.quantity);
 
-            const productTotal =
-                price * quantity;
-
-
-            total += productTotal;
-
-            count += quantity;
+        const productTotal =
+            price * quantity;
 
 
-            const item =
-                document.createElement("div");
+        total += productTotal;
 
-            item.className =
-                "cart-item";
+        count += quantity;
 
 
-            item.innerHTML = `
+        const item =
+            document.createElement("div");
 
-                <div class="cart-item-info">
-
-                    <h3>
-                        ${escapeHTML(product.name)}
-                    </h3>
-
-                    <p>
-                        ${price.toLocaleString()}
-                        EGP
-                    </p>
-
-                </div>
+        item.className =
+            "cart-item";
 
 
-                <div class="quantity-controls">
+        item.innerHTML = `
 
-                    <button
-                        type="button"
-                        data-action="increase"
-                        data-index="${index}">
-                        +
-                    </button>
+            <div class="cart-item-info">
 
-                    <span>
-                        ${quantity}
-                    </span>
+                <h3>
+                    ${escapeHTML(product.name)}
+                </h3>
 
-                    <button
-                        type="button"
-                        data-action="decrease"
-                        data-index="${index}">
-                        −
-                    </button>
-
-                </div>
-
-
-                <div class="cart-item-total">
-
-                    ${productTotal.toLocaleString()}
+                <p>
+                    ${price.toLocaleString()}
                     EGP
+                </p>
 
-                </div>
+            </div>
 
+
+            <div class="quantity-controls">
 
                 <button
                     type="button"
-                    class="remove-item"
-                    data-action="remove"
+                    data-action="increase"
                     data-index="${index}">
-
-                    ×
-
+                    +
                 </button>
 
-            `;
+                <span>
+                    ${quantity}
+                </span>
+
+                <button
+                    type="button"
+                    data-action="decrease"
+                    data-index="${index}">
+                    −
+                </button>
+
+            </div>
 
 
-            cartItems.appendChild(item);
+            <div class="cart-item-total">
 
-        }
-    );
+                ${productTotal.toLocaleString()}
+                EGP
+
+            </div>
+
+
+            <button
+                type="button"
+                class="remove-item"
+                data-action="remove"
+                data-index="${index}">
+
+
+            </button>
+
+        `;
+
+
+        cartItems.appendChild(item);
+
+    });
 
 
     /* COUNT */
@@ -519,13 +536,14 @@ cartItems.addEventListener(
 
 
         if (!button) {
+
             return;
+
         }
 
 
         const action =
             button.dataset.action;
-
 
         const index =
             Number(button.dataset.index);
@@ -542,6 +560,8 @@ cartItems.addEventListener(
         }
 
 
+        /* INCREASE */
+
         if (action === "increase") {
 
             cart[index].quantity =
@@ -551,6 +571,8 @@ cartItems.addEventListener(
 
         }
 
+
+        /* DECREASE */
 
         if (action === "decrease") {
 
@@ -573,6 +595,8 @@ cartItems.addEventListener(
 
         }
 
+
+        /* REMOVE */
 
         if (action === "remove") {
 
@@ -701,33 +725,30 @@ whatsappBtn.addEventListener(
         let total = 0;
 
 
-        cart.forEach(
-            function (product) {
+        cart.forEach(function (product) {
 
-                const price =
-                    Number(product.price);
+            const price =
+                Number(product.price);
 
-                const quantity =
-                    Number(product.quantity);
+            const quantity =
+                Number(product.quantity);
 
-
-                const productTotal =
-                    price * quantity;
+            const productTotal =
+                price * quantity;
 
 
-                total += productTotal;
+            total += productTotal;
 
 
-                message +=
-                    product.name +
-                    " x " +
-                    quantity +
-                    " = " +
-                    productTotal.toLocaleString() +
-                    " EGP\n";
+            message +=
+                product.name +
+                " x " +
+                quantity +
+                " = " +
+                productTotal.toLocaleString() +
+                " EGP\n";
 
-            }
-        );
+        });
 
 
         message +=
