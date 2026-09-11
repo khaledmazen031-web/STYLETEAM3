@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-/* =========================
-   ELEMENTS
-========================= */
 
 const cartButton = document.getElementById("cartButton");
 const cartOverlay = document.getElementById("cartOverlay");
@@ -20,18 +17,14 @@ const closeCategoryBtn = document.getElementById("closeCategory");
 const categoryTitle = document.getElementById("categoryTitle");
 const categoryProductsContainer = document.getElementById("categoryProductsContainer");
 
-/* =========================
-   CHECK ESSENTIAL ELEMENTS
-========================= */
+
 
 if (!cartButton || !cartOverlay || !closeCart || !cartItems || !cartCount || !cartTotal || !whatsappBtn) {
     console.error("STYLE TEAM: Some essential cart HTML elements are missing.");
     return;
 }
 
-/* =========================
-   CART DATA & PERSISTENCE
-========================= */
+
 
 let cart = [];
 
@@ -56,9 +49,7 @@ function saveCart() {
     }
 }
 
-/* =========================
-   BACKGROUND MUSIC
-========================= */
+
 
 const bgMusic = document.getElementById("bgMusic");
 function playMusic() {
@@ -71,9 +62,7 @@ function playMusic() {
 document.addEventListener("touchstart", playMusic, { once: true });
 document.addEventListener("click", playMusic, { once: true });
 
-/* =========================
-   CATEGORY DATA & DRAWER
-========================= */
+
 
 const categoryData = {
     tshirts: [
@@ -147,9 +136,6 @@ if (closeCategoryBtn && categoryOverlay) {
     });
 }
 
-/* =========================
-   CART OPERATIONS & UI
-========================= */
 
 window.addToCartFromCategory = function(name, price, img, buttonElement) {
     const productItemContainer = buttonElement.closest(".category-product-item");
@@ -266,9 +252,7 @@ function updateCart() {
     saveCart();
 }
 
-/* =========================
-   MODAL CONTROLS & ESCAPE
-========================= */
+
 
 function openCart() {
     cartOverlay.classList.add("active");
@@ -303,9 +287,7 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-/* =========================
-   WHATSAPP CHECKOUT
-========================= */
+
 
 whatsappBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -340,9 +322,6 @@ whatsappBtn.addEventListener("click", function (event) {
     }
 });
 
-/* =========================
-   HTML ESCAPE HELPER
-========================= */
 
 function escapeHTML(text) {
     if (!text) return "";
@@ -351,9 +330,7 @@ function escapeHTML(text) {
     return div.innerHTML;
 }
 
-/* =========================
-   INITIAL LOAD
-========================= */
+
 
 updateCart();
 

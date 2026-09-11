@@ -13,9 +13,7 @@
 }
 
 
-/* =========================
-   RESET
-========================= */
+
 
 * {
     margin: 0;
@@ -40,9 +38,7 @@ button {
 }
 
 
-/* =========================
-   HEADER
-========================= */
+
 
 .header {
     position: sticky;
@@ -68,9 +64,6 @@ button {
 }
 
 
-/* =========================
-   NAVBAR
-========================= */
 
 .navbar {
     display: flex;
@@ -91,9 +84,7 @@ button {
 }
 
 
-/* =========================
-   HEADER ICONS
-========================= */
+
 
 .header-icons {
     display: flex;
@@ -123,9 +114,7 @@ button {
 }
 
 
-/* =========================
-   CART COUNT
-========================= */
+
 
 #cartCount {
     position: absolute;
@@ -146,9 +135,7 @@ button {
 }
 
 
-/* =========================
-   HERO
-========================= */
+
 
 .hero {
     min-height: calc(100vh - 82px);
@@ -225,9 +212,7 @@ button {
 }
 
 
-/* =========================
-   SHOP & CATEGORIES SYSTEM
-========================= */
+
 
 .shop {
     padding: 110px 7%;
@@ -257,7 +242,7 @@ button {
     color: var(--beige);
 }
 
-/* الأقسام (تظهر 2 جنب بعض بخلفية زجاجية) */
+
 .categories {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -304,7 +289,7 @@ button {
     margin: 0 !important;
 }
 
-/* إخفاء وإظهار أقسام المنتجات */
+
 .category-products {
     display: none;
 }
@@ -335,9 +320,7 @@ button {
 }
 
 
-/* =========================
-   PRODUCTS GRID
-========================= */
+
 
 .products {
     width: 100%;
@@ -409,9 +392,7 @@ button {
 }
 
 
-/* =========================
-   ABOUT
-========================= */
+
 
 .about {
     min-height: 600px;
@@ -453,9 +434,7 @@ button {
 }
 
 
-/* =========================
-   CONTACT
-========================= */
+
 
 .contact {
     padding: 110px 7%;
@@ -474,9 +453,7 @@ button {
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+
 
 .footer {
     padding: 45px 7%;
@@ -493,9 +470,7 @@ button {
 }
 
 
-/* =========================
-   CART OVERLAY & MODAL
-========================= */
+
 
 .cart-overlay {
     position: fixed;
@@ -601,11 +576,9 @@ button {
 .category-products.active {
     display: block;
 }
-/* =========================
-   MOBILE RESPONSIVE FOR CATEGORIES
-========================= */
+
 @media screen and (max-width: 768px) {
-    /* لو الأقسام محطوطة في Grid، نخليها عمودين جنب بعض أو عمود واحد حسب رغبتك (هنا خليناها عمودين عشان تملى المساحة بذوق) */
+    
     .categories {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -613,7 +586,7 @@ button {
         padding: 0 15px;
     }
 
-    /* ضبط حجم الكارت والصورة للـ موبايل */
+    
     .category-card {
         border-radius: 12px;
         overflow: hidden;
@@ -622,7 +595,7 @@ button {
     }
 
     .category-image {
-        height: 140px; /* تحكم في ارتفاع الصورة على الموبايل */
+        height: 140px; 
         width: 100%;
     }
 
@@ -638,12 +611,12 @@ button {
     }
 
     .category-content h3 {
-        font-size: 15px; /* حجم اسم القسم مناسب للموبايل */
+        font-size: 15px; 
         margin-bottom: 4px;
     }
 
     .category-content p {
-        font-size: 12px; /* حجم الوصف الصغير */
+        font-size: 12px; 
         color: #777;
     }
 }
