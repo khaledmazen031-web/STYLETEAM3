@@ -64,7 +64,7 @@ document.addEventListener("click", playMusic, { once: true });
 
 
 
-const categoryData = {
+let categoryData = {
     tshirts: [
         { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" },
         { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" }
@@ -79,6 +79,56 @@ const categoryData = {
         { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" }
     ]
 };
+
+// Pull live products from Supabase (admin-managed). Falls back to the
+// hardcoded list above if Supabase isn't configured yet or the fetch fails.
+async function loadProductsFromSupabase() {
+    if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+    try {
+        const { data, error } = await supabaseClient
+            .from("products")
+            .select("*")
+            .eq("is_active", true);
+        if (error || !data || data.length === 0) return;
+
+        const grouped = {};
+        data.forEach(function (p) {
+            if (!grouped[p.category]) grouped[p.category] = [];
+            grouped[p.category].push({
+                name: p.name,
+                price: Number(p.price).toLocaleString() + " EGP",
+                img: p.image
+            });
+        });
+        categoryData = grouped;
+    } catch (e) {
+        console.error("STYLE TEAM: Could not load products from Supabase.", e);
+    }
+}
+
+// Visitor tracking: one row per browser session
+async function trackVisit() {
+    if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+    try {
+        if (sessionStorage.getItem("styleTeamVisitLogged")) return;
+
+        let visitorId = localStorage.getItem("styleTeamVisitorId");
+        if (!visitorId) {
+            visitorId = "v-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
+            localStorage.setItem("styleTeamVisitorId", visitorId);
+        }
+
+        await supabaseClient.from("page_views").insert({
+            visitor_id: visitorId,
+            page: window.location.pathname
+        });
+        sessionStorage.setItem("styleTeamVisitLogged", "1");
+    } catch (e) {
+        console.error("STYLE TEAM: Could not log visit.", e);
+    }
+}
+trackVisit();
+loadProductsFromSupabase();
 
 categories.forEach(function (card) {
     card.addEventListener("click", function () {
@@ -289,6 +339,20 @@ document.addEventListener("keydown", function (event) {
 
 
 
+async function logOrderToSupabase(items, total) {
+    if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+    try {
+        await supabaseClient.from("orders").insert({
+            items: items,
+            total: total,
+            payment_method: "whatsapp",
+            status: "pending"
+        });
+    } catch (e) {
+        console.error("STYLE TEAM: Could not log order.", e);
+    }
+}
+
 whatsappBtn.addEventListener("click", function (event) {
     event.preventDefault();
 
@@ -301,6 +365,7 @@ whatsappBtn.addEventListener("click", function (event) {
     let message = "Hello STYLE TEAM 👋\n\nI want to order:\n";
 
     let total = 0;
+    const orderItems = [];
 
     cart.forEach(function (product) {
         const price = Number(product.price);
@@ -308,10 +373,20 @@ whatsappBtn.addEventListener("click", function (event) {
         const productTotal = price * quantity;
         total += productTotal;
 
+        orderItems.push({
+            name: product.name,
+            size: product.size || "M",
+            price: price,
+            quantity: quantity,
+            img: product.img || ""
+        });
+
         message += `- ${product.name} (Size: ${product.size || 'M'}) x${quantity} = ${productTotal.toLocaleString()} EGP\n`;
     });
 
     message += `\n--------------------\nTotal: ${total.toLocaleString()} EGP`;
+
+    logOrderToSupabase(orderItems, total);
 
     const whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
 
