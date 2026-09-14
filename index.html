@@ -135,8 +135,36 @@
                 <span>Total</span>
                 <strong id="cartTotal">0 EGP</strong>
             </div>
-            <button type="button" class="checkout-btn" id="whatsappBtn">CONNECT ON WHATSAPP</button>
+            <button type="button" class="checkout-btn" id="payBtn">الدفع</button>
         </div>
+    </div>
+</div>
+
+<div class="cart-overlay" id="checkoutOverlay">
+    <div class="cart checkout-box">
+        <div class="cart-header">
+            <h2>إتمام الدفع</h2>
+            <button type="button" id="closeCheckout">×</button>
+        </div>
+        <form id="checkoutForm" class="checkout-form">
+            <label>الاسم</label>
+            <input type="text" id="checkoutName" required>
+            <label>رقم الموبايل</label>
+            <input type="tel" id="checkoutPhone" placeholder="01xxxxxxxxx" required>
+
+            <label>اختر طريقة الدفع</label>
+            <div class="payment-methods">
+                <button type="button" class="payment-method-btn" data-method="vodafone_cash">
+                    <span class="pm-icon">📱</span> فودافون كاش
+                </button>
+                <button type="button" class="payment-method-btn" data-method="visa">
+                    <span class="pm-icon">💳</span> فيزا / ماستركارد
+                </button>
+            </div>
+
+            <button type="submit" id="confirmPaymentBtn" class="confirm-payment-btn" disabled>تأكيد الدفع</button>
+            <p id="checkoutError" class="error-text"></p>
+        </form>
     </div>
 </div>
 
