@@ -7,7 +7,15 @@ const closeCart = document.getElementById("closeCart");
 const cartItems = document.getElementById("cartItems");
 const cartCount = document.getElementById("cartCount");
 const cartTotal = document.getElementById("cartTotal");
-const whatsappBtn = document.getElementById("whatsappBtn");
+const payBtn = document.getElementById("payBtn");
+const checkoutOverlay = document.getElementById("checkoutOverlay");
+const closeCheckout = document.getElementById("closeCheckout");
+const checkoutForm = document.getElementById("checkoutForm");
+const checkoutName = document.getElementById("checkoutName");
+const checkoutPhone = document.getElementById("checkoutPhone");
+const checkoutError = document.getElementById("checkoutError");
+const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
+let selectedPaymentMethod = null;
 
 const categoriesContainer = document.getElementById("categories") || document.getElementById("categoriesContainer");
 const categories = document.querySelectorAll(".category-card");
@@ -19,7 +27,7 @@ const categoryProductsContainer = document.getElementById("categoryProductsConta
 
 
 
-if (!cartButton || !cartOverlay || !closeCart || !cartItems || !cartCount || !cartTotal || !whatsappBtn) {
+if (!cartButton || !cartOverlay || !closeCart || !cartItems || !cartCount || !cartTotal || !payBtn) {
     console.error("STYLE TEAM: Some essential cart HTML elements are missing.");
     return;
 }
@@ -66,17 +74,17 @@ document.addEventListener("click", playMusic, { once: true });
 
 let categoryData = {
     tshirts: [
-        { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" },
-        { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" }
+        { name: "Classic Black T-Shirt", price: "350 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png", colors: [{ name: "Black", hex: "#000000" }] },
+        { name: "White Oversized Tee", price: "400 EGP", img: "https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png", colors: [{ name: "White", hex: "#ffffff" }] }
     ],
     shoes: [
-        { name: "VORIX Runner Sneakers", price: "1200 EGP", img: "https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" }
+        { name: "VORIX Runner Sneakers", price: "1200 EGP", img: "https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png", colors: [{ name: "Black", hex: "#000000" }, { name: "White", hex: "#ffffff" }] }
     ],
     pants: [
-        { name: "Cargo Street Pants", price: "750 EGP", img: "https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" }
+        { name: "Cargo Street Pants", price: "750 EGP", img: "https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png", colors: [{ name: "Black", hex: "#000000" }] }
     ],
     hoodies: [
-        { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" }
+        { name: "Heavyweight Black Hoodie", price: "950 EGP", img: "https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png", colors: [{ name: "Black", hex: "#000000" }] }
     ]
 };
 
@@ -97,7 +105,8 @@ async function loadProductsFromSupabase() {
             grouped[p.category].push({
                 name: p.name,
                 price: Number(p.price).toLocaleString() + " EGP",
-                img: p.image
+                img: p.image,
+                colors: Array.isArray(p.colors) ? p.colors : []
             });
         });
         categoryData = grouped;
@@ -142,27 +151,45 @@ categories.forEach(function (card) {
 
         if (categoryProductsContainer) {
             if (products.length > 0) {
-                categoryProductsContainer.innerHTML = products.map(function(item) {
+                categoryProductsContainer.innerHTML = `<div class="product-grid">` + products.map(function(item, index) {
+                    const colors = Array.isArray(item.colors) ? item.colors : [];
+                    const swatchesHTML = colors.length > 0 ? `
+                        <div class="color-swatches" data-product-index="${index}">
+                            ${colors.map(function (c, cIndex) {
+                                return `<span class="color-swatch ${cIndex === 0 ? 'selected' : ''}" style="background:${c.hex}" data-color-name="${escapeHTML(c.name)}" data-color-hex="${c.hex}" title="${escapeHTML(c.name)}"></span>`;
+                            }).join("")}
+                        </div>
+                    ` : "";
+
                     return `
-                        <div class="category-product-item" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 12px; justify-content: space-between;">
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <img src="${item.img}" alt="${escapeHTML(item.name)}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px;">
-                                <div>
-                                    <h4 style="font-size: 13px; margin-bottom: 2px; color: #333;">${escapeHTML(item.name)}</h4>
-                                    <p style="color: #666; font-size: 12px; font-weight: bold; margin-bottom: 4px;">${item.price}</p>
-                                    <select class="size-select" style="padding: 3px 6px; font-size: 11px; border-radius: 4px; border: 1px solid #ccc;">
-                                        <option value="S">S</option>
-                                        <option value="M" selected>M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                        <option value="XXL">XXL</option>
-                                    </select>
-                                </div>
+                        <div class="product-card-big" data-product-index="${index}">
+                            <div class="product-card-img">
+                                <img src="${item.img}" alt="${escapeHTML(item.name)}">
                             </div>
-                            <button type="button" onclick="window.addToCartFromCategory('${escapeHTML(item.name)}', '${item.price}', '${item.img}', this)" style="background: #000; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;">Add 🛒</button>
+                            <h4 class="product-card-name">${escapeHTML(item.name)}</h4>
+                            <p class="product-card-price">${item.price}</p>
+                            ${swatchesHTML}
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                            <button type="button" class="product-card-add" onclick="window.addToCartFromCategory('${escapeHTML(item.name)}', '${item.price}', '${item.img}', this)">Add 🛒</button>
                         </div>
                     `;
-                }).join("");
+                }).join("") + `</div>`;
+
+                // color swatch selection
+                categoryProductsContainer.querySelectorAll(".color-swatches").forEach(function (group) {
+                    group.querySelectorAll(".color-swatch").forEach(function (dot) {
+                        dot.addEventListener("click", function () {
+                            group.querySelectorAll(".color-swatch").forEach(function (d) { d.classList.remove("selected"); });
+                            dot.classList.add("selected");
+                        });
+                    });
+                });
             } else {
                 categoryProductsContainer.innerHTML = `<p class="empty-cart">No products available in this category.</p>`;
             }
@@ -188,12 +215,15 @@ if (closeCategoryBtn && categoryOverlay) {
 
 
 window.addToCartFromCategory = function(name, price, img, buttonElement) {
-    const productItemContainer = buttonElement.closest(".category-product-item");
+    const productItemContainer = buttonElement.closest(".product-card-big");
     const sizeSelect = productItemContainer ? productItemContainer.querySelector(".size-select") : null;
     const selectedSize = sizeSelect ? sizeSelect.value : "M";
 
+    const selectedSwatch = productItemContainer ? productItemContainer.querySelector(".color-swatch.selected") : null;
+    const selectedColor = selectedSwatch ? selectedSwatch.getAttribute("data-color-name") : null;
+
     const numericPrice = parseFloat(price.replace(/[^0-9.]/g, "")) || 0;
-    const cartItemId = `${name}-${selectedSize}`;
+    const cartItemId = `${name}-${selectedSize}-${selectedColor || "default"}`;
 
     const existingItem = cart.find(function(item) {
         return item.id === cartItemId;
@@ -206,6 +236,7 @@ window.addToCartFromCategory = function(name, price, img, buttonElement) {
             id: cartItemId,
             name: name,
             size: selectedSize,
+            color: selectedColor,
             price: numericPrice,
             rawPrice: price,
             img: img,
@@ -214,7 +245,7 @@ window.addToCartFromCategory = function(name, price, img, buttonElement) {
     }
 
     updateCart();
-    alert(`Added ${name} (Size: ${selectedSize}) to cart! 🛒`);
+    alert(`Added ${name}${selectedColor ? " (" + selectedColor + ")" : ""} (Size: ${selectedSize}) to cart! 🛒`);
 };
 
 window.increaseQuantity = function(id) {
@@ -282,7 +313,7 @@ function updateCart() {
                 ${product.img ? `<img src="${product.img}" alt="${escapeHTML(product.name)}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px;">` : ''}
                 <div>
                     <h4 style="font-size: 13px; margin-bottom: 2px; color: #333;">${escapeHTML(product.name)}</h4>
-                    <p style="color: #666; font-size: 11px; margin-bottom: 4px;">Size: <b>${product.size || 'M'}</b> | ${price.toLocaleString()} EGP</p>
+                    <p style="color: #666; font-size: 11px; margin-bottom: 4px;">Size: <b>${product.size || 'M'}</b>${product.color ? ` | Color: <b>${escapeHTML(product.color)}</b>` : ''} | ${price.toLocaleString()} EGP</p>
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <button type="button" onclick="window.decreaseQuantity('${itemId}')" style="background: #eee; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold;">-</button>
                         <span style="font-size: 13px; font-weight: bold;">${quantity}</span>
@@ -334,66 +365,129 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         closeCartWindow();
         if (categoryOverlay) categoryOverlay.classList.remove("active");
+        if (checkoutOverlay) checkoutOverlay.classList.remove("active");
     }
 });
 
 
 
-async function logOrderToSupabase(items, total) {
-    if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+async function logOrderToSupabase(items, total, paymentMethod, customerName, customerPhone) {
+    if (typeof supabaseClient === "undefined" || !supabaseClient) return null;
     try {
-        await supabaseClient.from("orders").insert({
+        const { data, error } = await supabaseClient.from("orders").insert({
             items: items,
             total: total,
-            payment_method: "whatsapp",
-            status: "pending"
-        });
+            payment_method: paymentMethod,
+            status: "pending",
+            customer_name: customerName,
+            customer_phone: customerPhone
+        }).select().single();
+        if (error) throw error;
+        return data;
     } catch (e) {
         console.error("STYLE TEAM: Could not log order.", e);
+        return null;
     }
 }
 
-whatsappBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-
+function openCheckout() {
     if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
     }
+    checkoutOverlay.classList.add("active");
+}
 
-    const phoneNumber = "201007341483"; 
-    let message = "Hello STYLE TEAM 👋\n\nI want to order:\n";
+function closeCheckoutWindow() {
+    checkoutOverlay.classList.remove("active");
+}
+
+payBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    openCheckout();
+});
+
+if (closeCheckout) {
+    closeCheckout.addEventListener("click", function () {
+        closeCheckoutWindow();
+    });
+}
+
+checkoutOverlay.addEventListener("click", function (event) {
+    if (event.target === checkoutOverlay) closeCheckoutWindow();
+});
+
+document.querySelectorAll(".payment-method-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+        document.querySelectorAll(".payment-method-btn").forEach(function (b) { b.classList.remove("selected"); });
+        btn.classList.add("selected");
+        selectedPaymentMethod = btn.dataset.method;
+        confirmPaymentBtn.disabled = false;
+    });
+});
+
+checkoutForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    checkoutError.textContent = "";
+
+    if (!selectedPaymentMethod) {
+        checkoutError.textContent = "اختر طريقة الدفع.";
+        return;
+    }
+
+    const name = checkoutName.value.trim();
+    const phone = checkoutPhone.value.trim();
+    if (!name || !phone) {
+        checkoutError.textContent = "اكتب الاسم ورقم الموبايل.";
+        return;
+    }
 
     let total = 0;
     const orderItems = [];
-
     cart.forEach(function (product) {
         const price = Number(product.price);
         const quantity = Number(product.quantity);
-        const productTotal = price * quantity;
-        total += productTotal;
-
+        total += price * quantity;
         orderItems.push({
             name: product.name,
             size: product.size || "M",
+            color: product.color || null,
             price: price,
             quantity: quantity,
             img: product.img || ""
         });
-
-        message += `- ${product.name} (Size: ${product.size || 'M'}) x${quantity} = ${productTotal.toLocaleString()} EGP\n`;
     });
 
-    message += `\n--------------------\nTotal: ${total.toLocaleString()} EGP`;
+    confirmPaymentBtn.disabled = true;
+    confirmPaymentBtn.textContent = "جاري التحويل...";
 
-    logOrderToSupabase(orderItems, total);
+    const order = await logOrderToSupabase(orderItems, total, selectedPaymentMethod, name, phone);
 
-    const whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
+    try {
+        const response = await fetch("/api/create-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                amount: total,
+                method: selectedPaymentMethod,
+                name: name,
+                phone: phone,
+                orderId: order ? order.id : null
+            })
+        });
 
-    const newWindow = window.open(whatsappURL, "_blank");
+        const result = await response.json();
 
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
-        window.location.href = whatsappURL;
+        if (!response.ok || !result.redirectUrl) {
+            throw new Error(result.error || "Payment initialization failed");
+        }
+
+        window.location.href = result.redirectUrl;
+    } catch (e) {
+        console.error("STYLE TEAM: Payment initialization failed.", e);
+        checkoutError.textContent = "حصل خطأ أثناء بدء الدفع. حاول تاني.";
+        confirmPaymentBtn.disabled = false;
+        confirmPaymentBtn.textContent = "تأكيد الدفع";
     }
 });
 
