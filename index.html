@@ -18,7 +18,7 @@
     </div>
 
     <div class="header-icons">
-        <button type="button" class="search-btn">⌕</button>
+        <button type="button" class="search-btn" id="searchButton">⌕</button>
         <button type="button" class="cart-btn" id="cartButton">
             🛒
             <span id="cartCount">0</span>
@@ -51,45 +51,7 @@
         </div>
 
         <div class="categories" id="categories">
-            <div class="category-card" data-category="tshirts">
-                <div class="category-image">
-                    <img src="https://i.postimg.cc/KYzBVP7d/IMG-20260909-142026.png" alt="T-Shirts">
-                </div>
-                <div class="category-content">
-                    <h3>T-Shirts</h3>
-                    <p>Explore T-Shirts</p>
-                </div>
-            </div>
-
-            <div class="category-card" data-category="shoes">
-                <div class="category-image">
-                    <img src="https://i.postimg.cc/CK1ktGC9/IMG-20260909-142057.png" alt="Shoes">
-                </div>
-                <div class="category-content">
-                    <h3>Shoes</h3>
-                    <p>Explore Shoes</p>
-                </div>
-            </div>
-
-            <div class="category-card" data-category="pants">
-                <div class="category-image">
-                    <img src="https://i.postimg.cc/fbLmFc7G/IMG-20260909-142108.png" alt="Pants">
-                </div>
-                <div class="category-content">
-                    <h3>Pants</h3>
-                    <p>Explore Pants</p>
-                </div>
-            </div>
-
-            <div class="category-card" data-category="hoodies">
-                <div class="category-image">
-                    <img src="https://i.postimg.cc/7L60c31d/IMG-20260909-142044.png" alt="Hoodies">
-                </div>
-                <div class="category-content">
-                    <h3>HOODIES</h3>
-                    <p>Explore Hoodies</p>
-                </div>
-            </div>
+            <p class="empty-cart" id="categoriesLoading">Loading categories...</p>
         </div>
     </section>
 
@@ -177,6 +139,21 @@
         </div>
         <div class="cart-items" id="categoryProductsContainer">
             <p class="empty-cart">Loading products...</p>
+        </div>
+    </div>
+</div>
+
+<div class="cart-overlay" id="searchOverlay">
+    <div class="cart">
+        <div class="cart-header">
+            <h2>Search</h2>
+            <button type="button" id="closeSearch">×</button>
+        </div>
+        <div class="search-input-wrap">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search for a product...">
+        </div>
+        <div class="cart-items" id="searchResultsContainer">
+            <p class="empty-cart">Start typing to search products.</p>
         </div>
     </div>
 </div>
