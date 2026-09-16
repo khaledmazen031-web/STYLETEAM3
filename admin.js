@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dashboard.classList.remove("hidden");
     loadOverview();
     loadOrders();
-    loadProducts();
+    loadCategories().then(loadProducts);
   }
 
   loginForm.addEventListener("submit", async function (e) {
@@ -151,6 +151,85 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("refreshOrders").addEventListener("click", loadOrders);
 
+  // ---------- CATEGORIES ----------
+  const categoriesBody = document.getElementById("categoriesBody");
+  const categoriesEmpty = document.getElementById("categoriesEmpty");
+  const categoryModal = document.getElementById("categoryModal");
+  const categoryForm = document.getElementById("categoryForm");
+  const productCategorySelect = document.getElementById("productCategory");
+
+  let categoriesCache = [];
+
+  async function loadCategories() {
+    const { data, error } = await supabaseClient
+      .from("categories")
+      .select("*")
+      .order("created_at", { ascending: true });
+
+    categoriesCache = (!error && data) ? data : [];
+
+    // Fill the product form's category dropdown
+    productCategorySelect.innerHTML = categoriesCache
+      .map(function (c) { return `<option value="${c.id}">${escapeHTML(c.name)}</option>`; })
+      .join("");
+
+    // Render the categories table
+    categoriesBody.innerHTML = "";
+    if (categoriesCache.length === 0) {
+      categoriesEmpty.classList.remove("hidden");
+      return;
+    }
+    categoriesEmpty.classList.add("hidden");
+
+    categoriesCache.forEach(function (c) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${c.image ? `<img class="prod-thumb" src="${c.image}" alt="">` : "-"}</td>
+        <td>${escapeHTML(c.name)}</td>
+        <td><button class="icon-btn danger" data-delete-category="${c.id}">حذف</button></td>
+      `;
+      categoriesBody.appendChild(row);
+    });
+
+    document.querySelectorAll("[data-delete-category]").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        if (!confirm("حذف القسم؟ المنتجات المرتبطة به لن تُحذف لكنها ستختفي من الموقع حتى تغيّر قسمها.")) return;
+        await supabaseClient.from("categories").delete().eq("id", btn.dataset.deleteCategory);
+        loadCategories().then(loadProducts);
+      });
+    });
+  }
+
+  document.getElementById("addCategoryBtn").addEventListener("click", function () {
+    categoryForm.reset();
+    categoryModal.classList.remove("hidden");
+  });
+
+  document.getElementById("cancelCategoryBtn").addEventListener("click", function () {
+    categoryModal.classList.add("hidden");
+  });
+
+  categoryModal.addEventListener("click", function (e) {
+    if (e.target === categoryModal) categoryModal.classList.add("hidden");
+  });
+
+  categoryForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const name = document.getElementById("categoryName").value.trim();
+    const image = document.getElementById("categoryImage").value.trim();
+    if (!name) return;
+
+    await supabaseClient.from("categories").insert({ name: name, image: image || null });
+
+    categoryModal.classList.add("hidden");
+    loadCategories();
+  });
+
+  function categoryName(id) {
+    const cat = categoriesCache.find(function (c) { return c.id === id; });
+    return cat ? cat.name : id;
+  }
+
   // ---------- PRODUCTS ----------
   const productsBody = document.getElementById("productsBody");
   const productsEmpty = document.getElementById("productsEmpty");
@@ -177,7 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
       row.innerHTML = `
         <td>${p.image ? `<img class="prod-thumb" src="${p.image}" alt="">` : "-"}</td>
         <td>${escapeHTML(p.name)}</td>
-        <td>${escapeHTML(p.category)}</td>
+        <td>${escapeHTML(categoryName(p.category))}</td>
         <td>${Number(p.price).toLocaleString()} EGP</td>
         <td>
           <button class="icon-btn" data-edit='${JSON.stringify(p).replace(/'/g, "&apos;")}'>تعديل</button>
@@ -207,13 +286,19 @@ document.addEventListener("DOMContentLoaded", function () {
     productModalTitle.textContent = p ? "تعديل المنتج" : "منتج جديد";
     document.getElementById("productId").value = p ? p.id : "";
     document.getElementById("productName").value = p ? p.name : "";
-    document.getElementById("productCategory").value = p ? p.category : "tshirts";
+    document.getElementById("productCategory").value = p ? p.category : (categoriesCache[0] ? categoriesCache[0].id : "");
     document.getElementById("productPrice").value = p ? p.price : "";
     document.getElementById("productImage").value = p ? p.image || "" : "";
     productModal.classList.remove("hidden");
   }
 
-  document.getElementById("addProductBtn").addEventListener("click", function () { openProductModal(null); });
+  document.getElementById("addProductBtn").addEventListener("click", function () {
+    if (categoriesCache.length === 0) {
+      alert("أضف قسم واحد على الأقل من تبويب \"الأقسام\" قبل إضافة منتج.");
+      return;
+    }
+    openProductModal(null);
+  });
   document.getElementById("cancelProductBtn").addEventListener("click", function () {
     productModal.classList.add("hidden");
   });
