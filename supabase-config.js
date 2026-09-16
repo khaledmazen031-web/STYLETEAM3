@@ -2,7 +2,7 @@
 // SUPABASE_URL   = "Project URL"
 // SUPABASE_ANON_KEY = "anon public" key (safe to expose client-side)
 const SUPABASE_URL = "https://sjlykfrwmwaexypnimsk.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_0SyuKMjE9nVVphpeolnlRg_Z8q3SXrv-umgg";
+const SUPABASE_ANON_KEY = "sb_publishable_0SyuKMjE9nVVphpeolnlRg_Z8q3SXrv";
 
 let supabaseClient = null;
 try {
