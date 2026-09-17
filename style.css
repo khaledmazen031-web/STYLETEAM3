@@ -573,6 +573,15 @@ button {
     height: 80vh;
 }
 
+/* Laptop/desktop: widen the product overlay so 4 cards fit comfortably side by side */
+@media (min-width: 769px) {
+    #categoryOverlay .cart,
+    #searchOverlay .cart {
+        width: 980px;
+        max-width: calc(100vw - 40px);
+    }
+}
+
 .checkout-box {
     height: auto;
     max-height: calc(100vh - 24px);
@@ -656,11 +665,11 @@ button {
 
 .product-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 14px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .product-grid {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
