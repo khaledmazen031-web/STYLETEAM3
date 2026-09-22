@@ -698,6 +698,7 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: zoom-in;
 }
 
 .product-card-name {
@@ -828,4 +829,60 @@ button {
         font-size: 12px; 
         color: #777;
     }
+}
+
+/* PRODUCT IMAGE LIGHTBOX (zoom) */
+.img-lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.img-lightbox-overlay.hidden {
+    display: none;
+}
+
+.img-lightbox-frame {
+    width: 92vw;
+    height: 88vh;
+    max-width: 900px;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-lightbox-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    cursor: zoom-in;
+    transition: max-width 0.2s ease, max-height 0.2s ease;
+}
+
+.img-lightbox-frame img.zoomed {
+    max-width: none;
+    max-height: none;
+    width: 200%;
+    cursor: zoom-out;
+}
+
+.img-lightbox-overlay .lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    color: var(--white);
+    font-size: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 501;
 }
