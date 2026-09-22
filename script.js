@@ -30,6 +30,41 @@ const closeSearchBtn = document.getElementById("closeSearch");
 const searchInput = document.getElementById("searchInput");
 const searchResultsContainer = document.getElementById("searchResultsContainer");
 
+const productLightbox = document.getElementById("productImageLightbox");
+const productLightboxImg = document.getElementById("productLightboxImg");
+const productLightboxClose = document.getElementById("productLightboxClose");
+
+function openProductLightbox(src) {
+    if (!productLightbox || !productLightboxImg) return;
+    productLightboxImg.src = src;
+    productLightboxImg.classList.remove("zoomed");
+    productLightbox.classList.remove("hidden");
+}
+
+function closeProductLightbox() {
+    if (!productLightbox || !productLightboxImg) return;
+    productLightbox.classList.add("hidden");
+    productLightboxImg.src = "";
+    productLightboxImg.classList.remove("zoomed");
+}
+
+if (productLightboxImg) {
+    productLightboxImg.addEventListener("click", function () {
+        productLightboxImg.classList.toggle("zoomed");
+    });
+}
+if (productLightboxClose) {
+    productLightboxClose.addEventListener("click", closeProductLightbox);
+}
+if (productLightbox) {
+    productLightbox.addEventListener("click", function (e) {
+        if (e.target === productLightbox) closeProductLightbox();
+    });
+}
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeProductLightbox();
+});
+
 
 
 if (!cartButton || !cartOverlay || !closeCart || !cartItems || !cartCount || !cartTotal || !payBtn) {
@@ -65,6 +100,28 @@ function saveCart() {
 
 
 const bgMusic = document.getElementById("bgMusic");
+const DEFAULT_MUSIC_URL = "https://xgwaqdtufwxqllytpxmv.supabase.co/storage/v1/object/public/Anything/Dave_ft_Tems_-_Raindance.mp3";
+
+async function loadMusicUrl() {
+    if (!bgMusic) return;
+    let url = DEFAULT_MUSIC_URL;
+    try {
+        if (typeof supabaseClient !== "undefined" && supabaseClient) {
+            const { data, error } = await supabaseClient
+                .from("settings")
+                .select("music_url")
+                .eq("id", "site")
+                .single();
+            if (!error && data && data.music_url) {
+                url = data.music_url;
+            }
+        }
+    } catch (e) {
+        console.log("STYLE TEAM: Could not load music setting, using default.", e);
+    }
+    bgMusic.src = url;
+}
+
 function playMusic() {
     if (bgMusic && typeof bgMusic.play === "function") {
         bgMusic.play().catch(function(error) {
@@ -72,6 +129,7 @@ function playMusic() {
         });
     }
 }
+loadMusicUrl();
 document.addEventListener("touchstart", playMusic, { once: true });
 document.addEventListener("click", playMusic, { once: true });
 
@@ -256,6 +314,13 @@ function renderProductGrid(container, products) {
                 group.querySelectorAll(".color-swatch").forEach(function (d) { d.classList.remove("selected"); });
                 dot.classList.add("selected");
             });
+        });
+    });
+
+    // open product image in zoomable lightbox on click
+    container.querySelectorAll(".product-card-img img").forEach(function (img) {
+        img.addEventListener("click", function () {
+            openProductLightbox(img.src);
         });
     });
 }
