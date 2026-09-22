@@ -10,9 +10,7 @@
 </head>
 <body>
 
-<audio id="bgMusic" loop preload="auto">
-    <source src="https://xgwaqdtufwxqllytpxmv.supabase.co/storage/v1/object/public/Anything/Dave_ft_Tems_-_Raindance.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" loop preload="auto"></audio>
 
 <header class="header">
     <div class="logo">
@@ -159,6 +157,13 @@ Want to Stand Out? Then Choose VORIX.</p>
         <div class="cart-items" id="searchResultsContainer">
             <p class="empty-cart">Start typing to search products.</p>
         </div>
+    </div>
+</div>
+
+<div id="productImageLightbox" class="img-lightbox-overlay hidden">
+    <button type="button" class="lightbox-close" id="productLightboxClose">&times;</button>
+    <div class="img-lightbox-frame" id="productLightboxFrame">
+        <img id="productLightboxImg" src="" alt="">
     </div>
 </div>
 
