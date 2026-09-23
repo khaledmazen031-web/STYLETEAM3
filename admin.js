@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     data.forEach(function (order) {
       const itemsText = (order.items || [])
-        .map(function (it) { return `${it.name} x${it.quantity}`; })
+        .map(function (it) { return `${it.name} (${it.size || "M"}) x${it.quantity}`; })
         .join("، ");
 
       const row = document.createElement("tr");
@@ -536,6 +536,12 @@ document.addEventListener("DOMContentLoaded", function () {
       productsBody.appendChild(row);
     });
 
+    document.querySelectorAll(".prod-thumb").forEach(function (img) {
+      img.addEventListener("click", function () {
+        openLightbox(img.src);
+      });
+    });
+
     document.querySelectorAll("[data-edit]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         const p = JSON.parse(btn.getAttribute("data-edit"));
@@ -551,6 +557,27 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  const imageLightbox = document.getElementById("imageLightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    imageLightbox.classList.remove("hidden");
+  }
+
+  function closeLightbox() {
+    imageLightbox.classList.add("hidden");
+    lightboxImg.src = "";
+  }
+
+  document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+  imageLightbox.addEventListener("click", function (e) {
+    if (e.target === imageLightbox) closeLightbox();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeLightbox();
+  });
 
   function openProductModal(p) {
     productModalTitle.textContent = p ? "تعديل المنتج" : "منتج جديد";
@@ -618,9 +645,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .upload(fileName, file);
 
       if (uploadError) {
-        console.error("Image upload error:", uploadError);
         imageMsg.style.color = "var(--danger)";
-        imageMsg.textContent = "فشل رفع الصورة: " + (uploadError.message || uploadError.error || "خطأ غير معروف");
+        imageMsg.textContent = "فشل رفع الصورة. حاول مرة أخرى.";
         submitBtn.disabled = false;
         submitBtn.textContent = "حفظ";
         return;
